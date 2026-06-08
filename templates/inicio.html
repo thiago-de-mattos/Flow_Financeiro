@@ -1,0 +1,19 @@
+<body>
+    <h1>Olá, {{ nome_usuario }}!</h1>
+
+    <p>Este HTML está separado do meu código Python.</p>
+
+    <h3>Tecnologias que estou aprendendo:</h3>
+
+    <ul> 
+        {% for tec in tecnologias %}
+         <li>{{ tec }}</li> 
+        {% endfor %}
+    </ul> 
+    
+    {% if nome_usuario == 'Júnior' %} 
+        <p>Este éum conteúdo especial para o Júnior!</p> 
+    {% endif %}
+
+</body>
+</html>
