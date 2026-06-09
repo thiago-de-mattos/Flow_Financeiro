@@ -205,7 +205,6 @@ class UserBadge(models.Model):
     def __str__(self):
         return f"{self.user.name} desbloqueou '{self.badge.title}'"
 
-
 # ─── Leaderboard ─────────────────────────────────────────────────────────────
 
 class LeaderboardEntry(models.Model):
