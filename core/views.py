@@ -8,18 +8,25 @@ from .models import Profile
 
 
 # ─── Autenticação ─────────────────────────────────────────────────────────────
+
 def inicio_view(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+
     return render(request, "inicio.html")
+
 
 def register_view(request):
     if request.user.is_authenticated:
         return redirect("home")
 
     form = RegisterForm(request.POST or None)
+
     if request.method == "POST" and form.is_valid():
         with transaction.atomic():
             user = form.save()
-            Profile.objects.create(user=user)
+            Profile.objects.get_or_create(user=user)
+
         login(request, user)
         return redirect("home")
 
@@ -31,6 +38,7 @@ def login_view(request):
         return redirect("home")
 
     form = LoginForm(request.POST or None, request=request)
+
     if request.method == "POST" and form.is_valid():
         login(request, form.get_user())
         return redirect("home")
@@ -40,16 +48,19 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("login")
+    return redirect("inicio")
 
 
 # ─── Páginas principais ───────────────────────────────────────────────────────
 
 @login_required
 def home_view(request):
-    profile = request.user.profile
+    profile, created = Profile.objects.get_or_create(user=request.user)
     profile.update_streak()
-    return render(request, "home.html", {"profile": profile})
+
+    return render(request, "home.html", {
+        "profile": profile
+    })
 
 
 @login_required
@@ -57,12 +68,14 @@ def play_view(request):
     from .models import Module, UserLessonProgress
 
     modules = Module.objects.filter(is_active=True).prefetch_related("lessons")
+
     progress = UserLessonProgress.objects.filter(
-        user=request.user, completed=True
+        user=request.user,
+        completed=True
     ).values_list("lesson_id", flat=True)
 
     return render(request, "play.html", {
-        "modules":  modules,
+        "modules": modules,
         "progress": set(progress),
     })
 
@@ -71,13 +84,20 @@ def play_view(request):
 def profile_view(request):
     from .models import UserBadge, UserLessonProgress
 
-    profile       = request.user.profile
-    badges        = UserBadge.objects.filter(user=request.user).select_related("badge")
-    lessons_done  = UserLessonProgress.objects.filter(user=request.user, completed=True).count()
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    badges = UserBadge.objects.filter(
+        user=request.user
+    ).select_related("badge")
+
+    lessons_done = UserLessonProgress.objects.filter(
+        user=request.user,
+        completed=True
+    ).count()
 
     return render(request, "profile.html", {
-        "profile":      profile,
-        "badges":       badges,
+        "profile": profile,
+        "badges": badges,
         "lessons_done": lessons_done,
     })
 
@@ -93,7 +113,7 @@ def achievements_view(request):
     badges = Badge.objects.all()
 
     return render(request, "achievements.html", {
-        "badges":     badges,
+        "badges": badges,
         "earned_ids": set(earned_ids),
     })
 
@@ -102,17 +122,19 @@ def achievements_view(request):
 def leaderboard_view(request):
     from .models import LeaderboardEntry
     from django.utils import timezone
+    import datetime
 
-    scope  = request.GET.get("scope", "global")
+    scope = request.GET.get("scope", "global")
     period = timezone.localdate()
-    # Normaliza para início da semana (segunda-feira)
-    period = period - __import__("datetime").timedelta(days=period.weekday())
+
+    period = period - datetime.timedelta(days=period.weekday())
 
     entries = LeaderboardEntry.objects.filter(
-        scope=scope, period=period
+        scope=scope,
+        period=period
     ).select_related("user").order_by("rank")
 
     return render(request, "leaderboard.html", {
         "entries": entries,
-        "scope":   scope,
+        "scope": scope,
     })

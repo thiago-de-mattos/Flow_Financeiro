@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="home-page">
+
+    <div class="home-card">
+
+        <header class="home-top">
+            <div class="home-brand">
+                <img src="{% static 'img/logo.png' %}" alt="Flow Financeiro">
+                <span>Flow <strong>Financeiro</strong></span>
+            </div>
+
+            {% if not user.is_authenticated %}
+            <div class="home-links">
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            </div>
+            {% endif %}
+        </header>
+
+        <div class="floating-items">
+            <span class="coin coin-1">🪙</span>
+            <span class="coin coin-2">🪙</span>
+            <span class="money money-1">💵</span>
+            <span class="money money-2">💵</span>
+        </div>
+
+        <section class="hero-content">
+            <div class="hero-logo">
+                <div class="cloud-icon">
+                    <img src="{% static 'img/logo.png' %}">
+                </div>
+                
+            </div>
+
+            <h1>
+                Flow
+                <span>Financeiro</span>
+            </h1>
+
+            <h2>Aprenda finanças, jogando.</h2>
+
+            <p>
+                Complete desafios, evolua de nível e construa hábitos financeiros
+                de forma simples e divertida.
+            </p>
+        </section>
+
+        <section class="dashboard-preview">
+
+            <div class="preview-card evolution-card">
+                <div class="card-title">
+                    <h3>Sua evolução financeira</h3>
+                    <span>↗ +32%</span>
+                </div>
+
+                <div class="fake-chart">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="weeks">
+                    <small>Sem 1</small>
+                    <small>Sem 2</small>
+                    <small>Sem 3</small>
+                    <small>Sem 4</small>
+                </div>
+            </div>
+
+            <div class="preview-card saving-card">
+                <h3>Poupança<br>do mês</h3>
+
+                <div class="circle-progress">
+                    <span>72%</span>
+                </div>
+
+                <strong>R$ 720 / R$ 1.000</strong>
+            </div>
+
+            <div class="preview-card level-card">
+                <div class="level-icon">📊</div>
+
+                <div>
+                    <small>Nível atual</small>
+                    <h3>Nível 12</h3>
+
+                    <div class="xp-progress">
+                        <span></span>
+                    </div>
+
+                    <small>1850 / 2500 XP</small>
+                </div>
+            </div>
+
+            <div class="preview-card knowledge-card">
+                <h3>Conhecimento adquirido</h3>
+
+                <div class="bars">
+                    <span style="height: 25%;"></span>
+                    <span style="height: 40%;"></span>
+                    <span style="height: 55%;"></span>
+                    <span style="height: 70%;"></span>
+                    <span style="height: 82%;"></span>
+                    <span style="height: 95%;"></span>
+                </div>
+
+                <div class="months">
+                    <small>Jan</small>
+                    <small>Fev</small>
+                    <small>Mar</small>
+                    <small>Abr</small>
+                    <small>Mai</small>
+                    <small>Jun</small>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="bottom-art">
+            <span class="bank">🏛️</span>
+            <span class="wallet">👛</span>
+            <span class="big-arrow">➜</span>
+            <span class="shield">🛡️</span>
+        </section>
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'play' %}" class="start-button">
+            🚀 Jogar agora
+            <span>›</span>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}" class="start-button">
+            🚀 Começar
+            <span>›</span>
+        </a>
+        {% endif %}
+
+        <p class="safe-text">
+            🛡️ 100% gratuito | Aprendizado seguro | Gamificação
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
