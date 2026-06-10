@@ -251,3 +251,41 @@ body {
   display: block;
   object-fit: cover;
 }
+
+/* ─── Main e body ───────────────────────────────────────── */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.ff-main {
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Header autenticado ────────────────────────────────── */
+.ff-header {
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ff-nav {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+}
+
+.ff-nav a {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-mid);
+  text-decoration: none;
+}
+
+.ff-nav a:hover { color: var(--green); }
