@@ -6,11 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Flow Financeiro{% endblock %}</title>
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
@@ -18,18 +14,16 @@
 <body>
 
     {% if messages %}
-    <div class="messages">
+    <div class="ff-messages">
         {% for message in messages %}
-        <div class="message message--{{ message.tags }}">
-            {{ message }}
-        </div>
+        <div class="ff-message ff-message--{{ message.tags }}">{{ message }}</div>
         {% endfor %}
     </div>
     {% endif %}
 
     {% if user.is_authenticated %}
-    <header>
-        <nav>
+    <header class="ff-header">
+        <nav class="ff-nav">
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'play' %}">Jogar</a>
             <a href="{% url 'leaderboard' %}">Ranking</a>
@@ -40,13 +34,9 @@
     </header>
     {% endif %}
 
-    <main>
+    <main class="ff-main">
         {% block content %}{% endblock %}
     </main>
-
-    <footer>
-        <p>© 2026 Flow Financeiro</p>
-    </footer>
 
     {% block extra_js %}{% endblock %}
 
