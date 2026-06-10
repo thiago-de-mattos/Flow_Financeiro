@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+
+    <div class="dashboard-app">
+
+        <header class="dashboard-hero">
+
+            <div class="hero-content">
+                <div>
+                    <p>Welcome back,</p>
+                    <h1>{{ request.user.username|default:"Alex" }} 👋</h1>
+                </div>
+
+                <div class="notification">🔔</div>
+            </div>
+
+            <img class="pig-img" src="{% static 'img/porco_3.png' %}" alt="Cofrinho">
+
+        </header>
+
+        <main class="dashboard-content">
+
+            <section class="summary-row">
+
+                <div class="summary-card coins-card">
+                    <p>Coins Balance</p>
+
+                    <div class="coins-info">
+                        <span class="coin-icon">🪙</span>
+
+                        <div>
+                            <h2>1,250</h2>
+                            <small>Coins</small>
+                        </div>
+
+                        <button type="button">+</button>
+                    </div>
+                </div>
+
+                <div class="summary-card savings-card">
+                    <p>💵 Savings Progress</p>
+
+                    <h2>72%</h2>
+
+                    <div class="progress-bar">
+                        <span></span>
+                    </div>
+
+                    <small>Goal: Emergency Fund</small>
+
+                    <span class="bag-icon">💰</span>
+                </div>
+
+            </section>
+
+            <section class="menu-grid">
+
+                <a href="{% url 'play' %}" class="menu-card play-card">
+                    <span class="tag">NEW</span>
+
+                    <div class="route-art">⛳</div>
+
+                    <h3>Play</h3>
+                    <p>Continue your learning journey</p>
+
+                    <span class="arrow green">›</span>
+                </a>
+
+                <a href="{% url 'achievements' %}" class="menu-card">
+                    <div class="trophy-art">🏆</div>
+
+                    <h3>Achievements</h3>
+                    <p>Unlock badges and track progress</p>
+
+                    <span class="arrow orange">›</span>
+                </a>
+
+                <a href="{% url 'leaderboard' %}" class="menu-card">
+                    <div class="rank-art">🏆</div>
+
+                    <h3>Rank</h3>
+                    <p>See how you rank among friends</p>
+
+                    <span class="arrow blue">›</span>
+                </a>
+
+                <a href="{% url 'profile' %}" class="menu-card">
+                    <div class="about-art">👥</div>
+
+                    <h3>About Us</h3>
+                    <p>Learn more about our mission</p>
+
+                    <span class="arrow purple">›</span>
+                </a>
+
+            </section>
+
+            <section class="overview-card">
+
+                <div class="overview-header">
+                    <h3>Spending Overview</h3>
+                    <span>This Month⌄</span>
+                </div>
+
+                <div class="overview-body">
+
+                    <div class="donut">
+                        <span>
+                            $920
+                            <small>spent</small>
+                        </span>
+                    </div>
+
+                    <ul>
+                        <li><span class="dot green-dot"></span> Food & Drink</li>
+                        <li><span class="dot blue-dot"></span> Transport</li>
+                        <li><span class="dot yellow-dot"></span> Shopping</li>
+                        <li><span class="dot purple-dot"></span> Entertainment</li>
+                        <li><span class="dot gray-dot"></span> Others</li>
+                    </ul>
+
+                </div>
+
+            </section>
+
+            <section class="tip-card">
+                <span>💵</span>
+
+                <p>
+                    Small steps today,<br>
+                    <strong>big freedom tomorrow.</strong> 🌱
+                </p>
+            </section>
+
+        </main>
+
+        <nav class="bottom-nav">
+
+            <a href="{% url 'home' %}" class="active">
+                🏠
+                <span>Home</span>
+            </a>
+
+            <a href="{% url 'play' %}">
+                🎮
+                <span>Jogar</span>
+            </a>
+
+            <a href="{% url 'achievements' %}">
+                🏆
+                <span>Conquistas</span>
+            </a>
+
+            <a href="{% url 'leaderboard' %}">
+                📊
+                <span>Ranking</span>
+            </a>
+
+            <a href="{% url 'profile' %}">
+                👤
+                <span>Perfil</span>
+            </a>
+
+        </nav>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
