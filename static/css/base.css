@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+/* ─── Reset ─────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Variáveis ─────────────────────────────────────────── */
+:root {
+  /* Cores principais */
+  --green-dark:   #1b5e20;
+  --green:        #2e7d32;
+  --green-mid:    #43a047;
+  --green-light:  #a5d6a7;
+  --green-pale:   #e8f5e9;
+  --blue-dark:    #0d47a1;
+  --blue:         #1565c0;
+  --blue-light:   #90caf9;
+
+  /* Neutros */
+  --text-dark:    #37474f;
+  --text-mid:     #546e7a;
+  --text-light:   #90a4ae;
+  --text-pale:    #b0bec5;
+  --border:       #e0e0e0;
+  --bg:           #f1f8f1;
+  --white:        #ffffff;
+
+  /* Feedback */
+  --error:        #e53935;
+  --error-light:  #ffebee;
+  --error-border: #ffcdd2;
+
+  /* Tipografia */
+  --font:         'Nunito', sans-serif;
+
+  /* Bordas */
+  --radius-sm:    8px;
+  --radius-md:    12px;
+  --radius-lg:    20px;
+  --radius-xl:    28px;
+  --radius-full:  999px;
+
+  /* Sombras */
+  --shadow-sm:    0 2px 8px rgba(0,0,0,.08);
+  --shadow-md:    0 4px 16px rgba(0,0,0,.10);
+  --shadow-card:  0 -4px 24px rgba(0,0,0,.06);
+}
+
+/* ─── Base ──────────────────────────────────────────────── */
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* ─── Layout ────────────────────────────────────────────── */
+.ff-wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* ─── Topbar ────────────────────────────────────────────── */
+.ff-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+}
+
+.ff-back {
+  width: 38px; height: 38px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  border: none; cursor: pointer;
+}
+
+.ff-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 800; color: var(--blue);
+}
+
+.ff-logo img { width: 28px; height: 28px; }
+
+/* ─── Títulos ───────────────────────────────────────────── */
+.ff-title {
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--green-dark);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ff-title-underline {
+  width: 60px; height: 4px;
+  background: var(--green-mid);
+  border-radius: 4px;
+}
+
+/* ─── Card ──────────────────────────────────────────────── */
+.ff-card {
+  background: var(--white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 32px 24px 28px;
+  flex: 1;
+  box-shadow: var(--shadow-card);
+}
+
+/* ─── Formulário ────────────────────────────────────────── */
+.ff-field-group { margin-bottom: 24px; }
+
+.ff-field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.ff-field-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ff-field-icon {
+  width: 44px; height: 44px;
+  background: var(--green-pale);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.ff-input-wrap { position: relative; flex: 1; }
+
+.ff-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--green-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-dark);
+  outline: none;
+  background: var(--white);
+  transition: border-color .2s;
+}
+.ff-input:focus { border-color: var(--green); }
+.ff-input::placeholder { color: var(--text-pale); }
+.ff-input--error { border-color: var(--error); }
+
+.ff-eye {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  cursor: pointer; font-size: 18px;
+  color: var(--text-light);
+}
+
+/* ─── Feedback ──────────────────────────────────────────── */
+.ff-error {
+  display: block;
+  font-size: 12px;
+  color: var(--error);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.ff-error-box {
+  background: var(--error-light);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #c62828;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.ff-messages { padding: 12px 20px 0; }
+.ff-message {
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.ff-message--success { background: var(--green-pale); color: var(--green-dark); }
+.ff-message--error   { background: var(--error-light); color: var(--error); }
+.ff-message--warning { background: #fff8e1; color: #f57f17; }
+
+/* ─── Botões ────────────────────────────────────────────── */
+.ff-btn {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: var(--green);
+  color: var(--white);
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 18px;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background .15s, transform .1s;
+}
+.ff-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+.ff-btn--blue { background: var(--blue); }
+.ff-btn--blue:hover { background: var(--blue-dark); }
+
+/* ─── Divisor ───────────────────────────────────────────── */
+.ff-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px 0;
+}
+.ff-divider-line { flex: 1; height: 1px; background: var(--border); }
+.ff-divider-text {
+  font-size: 13px; color: var(--text-light); font-weight: 700;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 2px 12px;
+}
+
+/* ─── Links ─────────────────────────────────────────────── */
+.ff-link-text {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-mid);
+}
+.ff-link-text a { color: var(--blue); text-decoration: none; }
+.ff-link-text a:hover { text-decoration: underline; }
+
+/* ─── Ilustração base ───────────────────────────────────── */
+.ff-ilustracao {
+  width: 100%;
+  background: linear-gradient(180deg, var(--green-light) 0%, var(--green-pale) 100%);
+}
+.ff-ilustracao img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
