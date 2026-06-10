@@ -50,13 +50,13 @@
 .ff-title {
   font-size: 48px;
   font-weight: 900;
-  color: var(--green-dark);
+  color: var(--white);
   line-height: 1;
 }
 
 .ff-title-underline {
   width: 60px; height: 4px;
-  background: var(--green-dark);
+  background: var(--white);
   border-radius: 4px;
   margin-top: 8px;
 }
