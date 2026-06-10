@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro — Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ff-wrap">
+
+    <!-- Topo verde -->
+    <div class="ff-hero">
+
+        <!-- Topbar -->
+        <div class="ff-topbar">
+            <a href="{% url 'inicio' %}" class="ff-back">
+                <img src="{% static 'img/arrow.svg' %}" alt="Voltar" style="width:20px;height:20px;">
+            </a>
+            <div class="ff-logo">
+                <img src="{% static 'img/logo.png' %}" alt="Flow Financeiro" class="ff-logo-img">
+                <span>Flow Financeiro</span>
+            </div>
+            <div style="width:38px"></div>
+        </div>
+
+        <!-- Título + ilustração -->
+        <div class="ff-hero-body">
+            <div class="ff-title-block">
+                <h1 class="ff-title">Cadastro</h1>
+                <div class="ff-title-underline"></div>
+            </div>
+            <div class="ff-hero-ilustracao">
+                <img src="{% static 'img/podio.png' %}" alt="">
+            </div>
+        </div>
+
+        <!-- Onda -->
+        <div class="ff-wave">
+            <svg viewBox="0 0 420 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 Q60 0 120 30 Q180 60 240 30 Q300 0 360 30 Q390 45 420 30 L420 60 L0 60 Z" fill="white" />
+            </svg>
+        </div>
+
+    </div>
+
+    <!-- Card do formulário -->
+    <div class="ff-card">
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <!-- Nome -->
+            <div class="ff-field-group">
+                <label class="ff-field-label">Nome</label>
+                <div class="ff-field-row">
+                    <div class="ff-field-icon">
+                        <img src="{% static 'img/person.svg' %}" alt="" style="width:24px;height:24px;">
+                    </div>
+                    <div class="ff-input-wrap">
+                        <input class="ff-input {% if form.name.errors %}ff-input--error{% endif %}" type="text"
+                            name="name" placeholder="Digite seu nome" value="{{ form.name.value|default:'' }}"
+                            autocomplete="name">
+                        {% if form.name.errors %}
+                        <span class="ff-error">{{ form.name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Idade -->
+            <div class="ff-field-group">
+                <label class="ff-field-label">Idade</label>
+                <div class="ff-field-row">
+                    <div class="ff-field-icon">
+                        <img src="{% static 'img/calendar.svg' %}" alt="" style="width:24px;height:24px;">
+                    </div>
+                    <div class="ff-input-wrap">
+                        <input class="ff-input {% if form.age.errors %}ff-input--error{% endif %}" type="number"
+                            name="age" placeholder="Digite sua idade" value="{{ form.age.value|default:'' }}" min="1"
+                            max="120">
+                        {% if form.age.errors %}
+                        <span class="ff-error">{{ form.age.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- E-mail -->
+            <div class="ff-field-group">
+                <label class="ff-field-label">E-mail</label>
+                <div class="ff-field-row">
+                    <div class="ff-field-icon">
+                        <img src="{% static 'img/email.svg' %}" alt="" style="width:24px;height:24px;">
+                    </div>
+                    <div class="ff-input-wrap">
+                        <input class="ff-input {% if form.email.errors %}ff-input--error{% endif %}" type="email"
+                            name="email" placeholder="Digite seu e-mail" value="{{ form.email.value|default:'' }}"
+                            autocomplete="email">
+                        {% if form.email.errors %}
+                        <span class="ff-error">{{ form.email.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Senha -->
+            <div class="ff-field-group">
+                <label class="ff-field-label">Senha</label>
+                <div class="ff-field-row">
+                    <div class="ff-field-icon">
+                        <img src="{% static 'img/cadeado.svg' %}" alt="" style="width:24px;height:24px;">
+                    </div>
+                    <div class="ff-input-wrap">
+                        <input class="ff-input {% if form.password1.errors %}ff-input--error{% endif %}" type="password"
+                            name="password1" placeholder="Crie uma senha" id="ff-pwd1" autocomplete="new-password">
+                        <button type="button" class="ff-eye" onclick="
+              const i = document.getElementById('ff-pwd1');
+              i.type = i.type === 'password' ? 'text' : 'password';
+              this.textContent = i.type === 'password' ? '👁️' : '🙈';
+            ">👁️</button>
+                        {% if form.password1.errors %}
+                        <span class="ff-error">{{ form.password1.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmar Senha -->
+            <div class="ff-field-group">
+                <label class="ff-field-label">Confirmar Senha</label>
+                <div class="ff-field-row">
+                    <div class="ff-field-icon ff-field-icon--blue">
+                        <img src="{% static 'img/cadeado.svg' %}" alt="" style="width:24px;height:24px;">
+                    </div>
+                    <div class="ff-input-wrap">
+                        <input class="ff-input {% if form.password2.errors %}ff-input--error{% endif %}" type="password"
+                            name="password2" placeholder="Repita a senha" id="ff-pwd2" autocomplete="new-password">
+                        <button type="button" class="ff-eye" onclick="
+              const i = document.getElementById('ff-pwd2');
+              i.type = i.type === 'password' ? 'text' : 'password';
+              this.textContent = i.type === 'password' ? '👁️' : '🙈';
+            ">👁️</button>
+                        {% if form.password2.errors %}
+                        <span class="ff-error">{{ form.password2.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Erro geral -->
+            {% if form.non_field_errors %}
+            <div class="ff-error-box">{{ form.non_field_errors.0 }}</div>
+            {% endif %}
+
+            <button type="submit" class="ff-btn">Criar Conta</button>
+
+        </form>
+
+        <div class="ff-divider">
+            <div class="ff-divider-line"></div>
+            <span class="ff-divider-text">ou</span>
+            <div class="ff-divider-line"></div>
+        </div>
+
+        <p class="ff-link-text">
+            Já tem uma conta? <a href="{% url 'login' %}">Entrar</a>
+        </p>
+
+    </div>
+
+    <!-- Ilustração base -->
+    <div class="ff-ilustracao">
+        <img src="{% static 'img/bonecos.png' %}" alt="">
+    </div>
+
+</div>
+{% endblock %}
