@@ -1,182 +1,218 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home | Flow Financeiro{% endblock %}
+{% block title %}Home — Flow Financeiro{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="ff-wrap">
 
-<section class="dashboard-page">
-
-    <div class="dashboard-app">
-
-        <header class="dashboard-hero">
-
-            <div class="hero-content">
-                <div>
-                    <p>Welcome back,</p>
-                    <h1>{{ request.user.username|default:"Alex" }} 👋</h1>
-                </div>
-
-                <div class="notification">🔔</div>
+    <!-- Topo azul -->
+    <div class="ff-hero">
+        <div class="ff-hero-topbar">
+            <div class="ff-welcome">
+                <span class="ff-welcome-sub">Bem-vindo de volta,</span>
+                <h1 class="ff-welcome-name">{{ request.user.name }} 👋</h1>
             </div>
-
-            <img class="pig-img" src="{% static 'img/porco_3.png' %}" alt="Cofrinho">
-
-        </header>
-
-        <main class="dashboard-content">
-
-            <section class="summary-row">
-
-                <div class="summary-card coins-card">
-                    <p>Coins Balance</p>
-
-                    <div class="coins-info">
-                        <span class="coin-icon">🪙</span>
-
-                        <div>
-                            <h2>1,250</h2>
-                            <small>Coins</small>
-                        </div>
-
-                        <button type="button">+</button>
-                    </div>
+            <div class="ff-hero-right">
+                <div class="ff-hero-ilustracao">
+                    <img src="{% static 'img/porco_1.png' %}" alt="Porquinho">
                 </div>
+                <a href="#" class="ff-bell">🔔</a>
+            </div>
+        </div>
 
-                <div class="summary-card savings-card">
-                    <p>💵 Savings Progress</p>
-
-                    <h2>72%</h2>
-
-                    <div class="progress-bar">
-                        <span></span>
-                    </div>
-
-                    <small>Goal: Emergency Fund</small>
-
-                    <span class="bag-icon">💰</span>
-                </div>
-
-            </section>
-
-            <section class="menu-grid">
-
-                <a href="{% url 'play' %}" class="menu-card play-card">
-                    <span class="tag">NEW</span>
-
-                    <div class="route-art">⛳</div>
-
-                    <h3>Play</h3>
-                    <p>Continue your learning journey</p>
-
-                    <span class="arrow green">›</span>
-                </a>
-
-                <a href="{% url 'achievements' %}" class="menu-card">
-                    <div class="trophy-art">🏆</div>
-
-                    <h3>Achievements</h3>
-                    <p>Unlock badges and track progress</p>
-
-                    <span class="arrow orange">›</span>
-                </a>
-
-                <a href="{% url 'leaderboard' %}" class="menu-card">
-                    <div class="rank-art">🏆</div>
-
-                    <h3>Rank</h3>
-                    <p>See how you rank among friends</p>
-
-                    <span class="arrow blue">›</span>
-                </a>
-
-                <a href="{% url 'profile' %}" class="menu-card">
-                    <div class="about-art">👥</div>
-
-                    <h3>About Us</h3>
-                    <p>Learn more about our mission</p>
-
-                    <span class="arrow purple">›</span>
-                </a>
-
-            </section>
-
-            <section class="overview-card">
-
-                <div class="overview-header">
-                    <h3>Spending Overview</h3>
-                    <span>This Month⌄</span>
-                </div>
-
-                <div class="overview-body">
-
-                    <div class="donut">
-                        <span>
-                            $920
-                            <small>spent</small>
-                        </span>
-                    </div>
-
-                    <ul>
-                        <li><span class="dot green-dot"></span> Food & Drink</li>
-                        <li><span class="dot blue-dot"></span> Transport</li>
-                        <li><span class="dot yellow-dot"></span> Shopping</li>
-                        <li><span class="dot purple-dot"></span> Entertainment</li>
-                        <li><span class="dot gray-dot"></span> Others</li>
-                    </ul>
-
-                </div>
-
-            </section>
-
-            <section class="tip-card">
-                <span>💵</span>
-
-                <p>
-                    Small steps today,<br>
-                    <strong>big freedom tomorrow.</strong> 🌱
-                </p>
-            </section>
-
-        </main>
-
-        <nav class="bottom-nav">
-
-            <a href="{% url 'home' %}" class="active">
-                🏠
-                <span>Home</span>
-            </a>
-
-            <a href="{% url 'play' %}">
-                🎮
-                <span>Jogar</span>
-            </a>
-
-            <a href="{% url 'achievements' %}">
-                🏆
-                <span>Conquistas</span>
-            </a>
-
-            <a href="{% url 'leaderboard' %}">
-                📊
-                <span>Ranking</span>
-            </a>
-
-            <a href="{% url 'profile' %}">
-                👤
-                <span>Perfil</span>
-            </a>
-
-        </nav>
-
+        <!-- Onda -->
+        <div class="ff-wave">
+            <svg viewBox="0 0 480 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 Q80 5 160 35 Q240 60 320 35 Q400 5 480 40 L480 60 L0 60 Z" fill="white" />
+            </svg>
+        </div>
     </div>
 
-</section>
+    <!-- Conteúdo -->
+    <div class="ff-content">
 
+        <!-- Cards topo: Coins + Progresso -->
+        <div class="ff-row">
+
+            <div class="ff-card ff-card--coins">
+                <span class="ff-card-label">Saldo de Moedas</span>
+                <div class="ff-coins-row">
+                    <img src="{% static 'img/coin.png' %}" alt="Moeda" class="ff-coin-img">
+                    <span class="ff-coins-num">{{ profile.coins }}</span>
+                    <a href="#" class="ff-coins-add">+</a>
+                </div>
+                <span class="ff-coins-sub">Moedas</span>
+            </div>
+
+            <div class="ff-card ff-card--savings">
+                <div class="ff-savings-header">
+                    <span class="ff-card-label">🎯 Progresso</span>
+                    <img src="{% static 'img/pote_dinheiro.png' %}" alt="" class="ff-savings-img">
+                </div>
+                <span class="ff-savings-pct">{% widthratio profile.xp_total profile.xp_next_level 100 %}%</span>
+                <div class="ff-bar-bg">
+                    <div class="ff-bar-fill"
+                        style="width: {% widthratio profile.xp_total profile.xp_next_level 100 %}%"></div>
+                </div>
+                <span class="ff-savings-goal">Nível {{ profile.level }}</span>
+            </div>
+
+        </div>
+
+        <!-- Grid de navegação -->
+        <div class="ff-grid">
+
+            <a href="{% url 'play' %}" class="ff-nav-card ff-nav-card--green">
+                <span class="ff-nav-badge">NOVO</span>
+                <img src="{% static 'img/trilha.png' %}" alt="Jogar" class="ff-nav-img">
+                <span class="ff-nav-title" style="color: var(--green);">Jogar</span>
+                <span class="ff-nav-desc">Continue sua jornada de aprendizado</span>
+                <div class="ff-nav-btn ff-nav-btn--green">›</div>
+            </a>
+
+            <a href="{% url 'achievements' %}" class="ff-nav-card ff-nav-card--yellow">
+                <img src="{% static 'img/trofeu_1.png' %}" alt="Conquistas" class="ff-nav-img">
+                <span class="ff-nav-title" style="color: #7b5e00;">Conquistas</span>
+                <span class="ff-nav-desc">Desbloqueie badges e acompanhe o progresso</span>
+                <div class="ff-nav-btn ff-nav-btn--yellow">›</div>
+            </a>
+
+            <a href="{% url 'leaderboard' %}" class="ff-nav-card ff-nav-card--blue">
+                <img src="{% static 'img/podio.png' %}" alt="Ranking" class="ff-nav-img">
+                <span class="ff-nav-title" style="color: var(--blue);">Ranking</span>
+                <span class="ff-nav-desc">Veja sua posição entre os amigos</span>
+                <div class="ff-nav-btn ff-nav-btn--blue">›</div>
+            </a>
+
+            <a href="#" class="ff-nav-card ff-nav-card--purple">
+                <img src="{% static 'img/bonecos.png' %}" alt="Sobre" class="ff-nav-img">
+                <span class="ff-nav-title" style="color: #6a1b9a;">Sobre Nós</span>
+                <span class="ff-nav-desc">Saiba mais sobre nossa missão</span>
+                <div class="ff-nav-btn ff-nav-btn--purple">›</div>
+            </a>
+
+        </div>
+
+        <!-- Spending Overview -->
+        <div class="ff-spending">
+            <div class="ff-spending-header">
+                <span class="ff-spending-title">Resumo de Gastos</span>
+                <span class="ff-spending-period">Este Mês ⌄</span>
+            </div>
+
+            <div class="ff-spending-body">
+
+                <!-- Donut -->
+                <div class="ff-donut-wrap">
+                    <svg viewBox="0 0 140 140" class="ff-donut">
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#e0e0e0" stroke-width="16" />
+                        <!-- Alimentação 35% -->
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#43a047" stroke-width="16"
+                            stroke-dasharray="131.9 376.99" stroke-dashoffset="0" transform="rotate(-90 70 70)" />
+                        <!-- Transporte 24% -->
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#1565c0" stroke-width="16"
+                            stroke-dasharray="90.5 376.99" stroke-dashoffset="-131.9" transform="rotate(-90 70 70)" />
+                        <!-- Compras 20% -->
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#f5a623" stroke-width="16"
+                            stroke-dasharray="75.4 376.99" stroke-dashoffset="-222.4" transform="rotate(-90 70 70)" />
+                        <!-- Lazer 13% -->
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#7b1fa2" stroke-width="16"
+                            stroke-dasharray="49.0 376.99" stroke-dashoffset="-297.8" transform="rotate(-90 70 70)" />
+                        <!-- Outros 8% -->
+                        <circle cx="70" cy="70" r="60" fill="none" stroke="#b0bec5" stroke-width="16"
+                            stroke-dasharray="30.2 376.99" stroke-dashoffset="-346.8" transform="rotate(-90 70 70)" />
+                    </svg>
+                    <div class="ff-donut-center">
+                        <span class="ff-donut-total">R$ 920</span>
+                        <span class="ff-donut-label">Total</span>
+                    </div>
+                </div>
+
+                <!-- Legenda -->
+                <div class="ff-legend">
+                    <div class="ff-legend-row">
+                        <span class="ff-dot" style="background:#43a047;"></span>
+                        <span class="ff-legend-name">Alimentação</span>
+                        <span class="ff-legend-val">R$ 320</span>
+                        <span class="ff-legend-pct">35%</span>
+                    </div>
+                    <div class="ff-legend-row">
+                        <span class="ff-dot" style="background:#1565c0;"></span>
+                        <span class="ff-legend-name">Transporte</span>
+                        <span class="ff-legend-val">R$ 220</span>
+                        <span class="ff-legend-pct">24%</span>
+                    </div>
+                    <div class="ff-legend-row">
+                        <span class="ff-dot" style="background:#f5a623;"></span>
+                        <span class="ff-legend-name">Compras</span>
+                        <span class="ff-legend-val">R$ 180</span>
+                        <span class="ff-legend-pct">20%</span>
+                    </div>
+                    <div class="ff-legend-row">
+                        <span class="ff-dot" style="background:#7b1fa2;"></span>
+                        <span class="ff-legend-name">Lazer</span>
+                        <span class="ff-legend-val">R$ 120</span>
+                        <span class="ff-legend-pct">13%</span>
+                    </div>
+                    <div class="ff-legend-row">
+                        <span class="ff-dot" style="background:#b0bec5;"></span>
+                        <span class="ff-legend-name">Outros</span>
+                        <span class="ff-legend-val">R$ 80</span>
+                        <span class="ff-legend-pct">8%</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Indicador -->
+            <div class="ff-spending-indicator">
+                <span class="ff-indicator-icon">📈</span>
+                <div>
+                    <strong>Queda de 12%</strong>
+                    <p>Você gastou menos que no mês passado 🎉</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner motivacional -->
+        <div class="ff-banner">
+            <img src="{% static 'img/dinheiro.png' %}" alt="" class="ff-banner-img">
+            <div class="ff-banner-text">
+                <p>Pequenos passos hoje,</p>
+                <p>grande <strong style="color: var(--green);">liberdade</strong> amanhã. 🌱</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Nav inferior -->
+    <nav class="ff-bottom-nav">
+        <a href="{% url 'home' %}" class="ff-bottom-item ff-bottom-item--active">
+            <span class="ff-bottom-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'play' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🎮</span>
+            <span>Jogar</span>
+        </a>
+        <a href="{% url 'achievements' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏆</span>
+            <span>Conquistas</span>
+        </a>
+        <a href="{% url 'leaderboard' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">📊</span>
+            <span>Ranking</span>
+        </a>
+        <a href="{% url 'profile' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
 {% endblock %}
-
-{% block footer %}{% endblock %}
