@@ -1,30 +1,27 @@
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth.password_validation import validate_password
 
 from .models import User
-
 
 # ─── Cadastro ────────────────────────────────────────────────────────────────
 
 class RegisterForm(forms.ModelForm):
-    password = forms.CharField(
+    password1 = forms.CharField(
         label="Senha",
-        widget=forms.PasswordInput(attrs={"placeholder": "Enter your password"}),
-        validators=[validate_password],
+        widget=forms.PasswordInput(attrs={"placeholder": "Crie uma senha"}),
     )
-    password_confirm = forms.CharField(
+    password2 = forms.CharField(
         label="Confirmar senha",
-        widget=forms.PasswordInput(attrs={"placeholder": "Confirm your password"}),
+        widget=forms.PasswordInput(attrs={"placeholder": "Repita a senha"}),
     )
 
     class Meta:
         model = User
         fields = ["name", "age", "email"]
         widgets = {
-            "name":  forms.TextInput(attrs={"placeholder": "Enter your name"}),
-            "age":   forms.NumberInput(attrs={"placeholder": "Enter your age", "min": 1, "max": 120}),
-            "email": forms.EmailInput(attrs={"placeholder": "Enter your email"}),
+            "name":  forms.TextInput(attrs={"placeholder": "Digite seu nome"}),
+            "age":   forms.NumberInput(attrs={"placeholder": "Digite sua idade", "min": 1, "max": 120}),
+            "email": forms.EmailInput(attrs={"placeholder": "Digite seu e-mail"}),
         }
         labels = {
             "name":  "Nome",
@@ -46,15 +43,25 @@ class RegisterForm(forms.ModelForm):
 
     def clean(self):
         cleaned = super().clean()
-        password = cleaned.get("password")
-        confirm  = cleaned.get("password_confirm")
-        if password and confirm and password != confirm:
-            self.add_error("password_confirm", "As senhas não coincidem.")
+        password1 = cleaned.get("password1")
+        password2 = cleaned.get("password2")
+
+        if password1:
+            import re
+            if len(password1) < 8:
+                self.add_error("password1", "Mínimo 8 caracteres.")
+            if not re.search(r'\d', password1):
+                self.add_error("password1", "Inclua pelo menos um número.")
+            if not re.search(r'[!@#$%^&*(),.?\":{}|<>]', password1):
+                self.add_error("password1", "Inclua pelo menos um símbolo (!@#$%...).")
+
+        if password1 and password2 and password1 != password2:
+            self.add_error("password2", "As senhas não coincidem.")
         return cleaned
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
+        user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
@@ -65,11 +72,11 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(
         label="E-mail",
-        widget=forms.EmailInput(attrs={"placeholder": "Enter your email"}),
+        widget=forms.EmailInput(attrs={"placeholder": "Digite seu e-mail"}),
     )
     password = forms.CharField(
         label="Senha",
-        widget=forms.PasswordInput(attrs={"placeholder": "Enter your password"}),
+        widget=forms.PasswordInput(attrs={"placeholder": "Digite sua senha"}),
     )
 
     def __init__(self, *args, **kwargs):
