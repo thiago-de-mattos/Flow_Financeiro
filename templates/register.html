@@ -32,7 +32,7 @@
                 <div class="ff-title-underline"></div>
             </div>
             <div class="ff-hero-ilustracao">
-                <img src="{% static 'img/podio.png' %}" alt="">
+                <img src="{% static 'img/prancheta.png' %}" alt="">
             </div>
         </div>
 
@@ -124,6 +124,13 @@
                         {% endif %}
                     </div>
                 </div>
+
+                <!-- Indicador de força da senha -->
+                <div class="ff-pwd-rules">
+                    <span id="rule-len">✗ Mínimo 8 caracteres</span>
+                    <span id="rule-num">✗ Um número</span>
+                    <span id="rule-sym">✗ Um símbolo</span>
+                </div>
             </div>
 
             <!-- Confirmar Senha -->
@@ -171,8 +178,33 @@
 
     <!-- Ilustração base -->
     <div class="ff-ilustracao">
-        <img src="{% static 'img/bonecos.png' %}" alt="">
+        <img src="{% static 'img/bank_.png' %}" alt="">
     </div>
 
 </div>
+
+<script>
+    // Remove mensagens de erro ao editar
+    document.querySelectorAll('.ff-input').forEach(function (input) {
+        input.addEventListener('input', function () {
+            const wrap = this.closest('.ff-input-wrap');
+            const errorMsg = wrap.querySelector('.ff-error');
+            if (errorMsg) errorMsg.style.display = 'none';
+            this.classList.remove('ff-input--error');
+        });
+    });
+
+    // Indicador de força da senha
+    document.getElementById('ff-pwd1').addEventListener('input', function () {
+        const v = this.value;
+        const check = (id, ok) => {
+            const el = document.getElementById(id);
+            el.textContent = (ok ? '✓ ' : '✗ ') + el.textContent.slice(2);
+            el.style.color = ok ? '#2e7d32' : '#e53935';
+        };
+        check('rule-len', v.length >= 8);
+        check('rule-num', /\d/.test(v));
+        check('rule-sym', /[!@#$%^&*(),.?":{}|<>]/.test(v));
+    });
+</script>
 {% endblock %}

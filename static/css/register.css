@@ -132,3 +132,18 @@
     min-height: 100vh;
   }
 }
+
+.ff-pwd-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding-left: 56px;
+}
+
+.ff-pwd-rules span {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e53935;
+  transition: color .2s;
+}
