@@ -366,3 +366,7 @@
   .ff-spending-body { flex-direction: column; }
   .ff-donut-wrap { margin: 0 auto; }
 }
+
+css.ff-wrap * {
+  box-sizing: border-box;
+}
