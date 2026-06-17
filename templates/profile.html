@@ -24,7 +24,7 @@
 
         <!-- Avatar -->
         <div class="ff-avatar-wrap">
-            <img src="{% static 'img/perfil_pessoas/' %}{{ profile.avatar }}.png" alt="Avatar" class="ff-avatar-img">
+            <img src="/static/img/perfil_pessoas/{{ profile.avatar }}.png" alt="Avatar" class="ff-avatar-img">
             <button class="ff-avatar-edit"
                 onclick="document.getElementById('ff-avatar-modal').classList.toggle('ff-modal--open')">✏️</button>
         </div>
@@ -50,9 +50,9 @@
                 <div class="ff-avatar-grid">
                     {% for av in avatares %}
                     <label class="ff-avatar-option {% if av == profile.avatar %}ff-avatar-option--active{% endif %}">
-                        <input type="radio" name="avatar" value="{{ av }}" {% if av==profile.avatar %}checked{% endif %}
+                        <input type="radio" name="avatar" value="{{ av }}" {% if av == profile.avatar %}checked{% endif %}
                             onchange="document.getElementById('ff-avatar-form').submit()">
-                        <img src="{% static 'img/perfil_pessoas/' %}{{ av }}.png" alt="{{ av }}">
+                        <img src="/static/img/perfil_pessoas/{{ av }}.png" alt="{{ av }}">
                     </label>
                     {% endfor %}
                 </div>
