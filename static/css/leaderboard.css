@@ -1,0 +1,294 @@
+.ff-wrap {
+  max-width: 480px;
+  margin: 40px auto;
+  background: #f5f7fa;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  padding-bottom: 70px;
+  position: relative;
+  min-height: 600px;
+}
+
+/* ─── Hero ───────────────────────────────────────────────── */
+.ff-hero {
+  background: linear-gradient(135deg, #1565c0 0%, #1976d2 50%, #26c6da 100%);
+  position: relative;
+}
+
+.ff-hero-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+}
+
+.ff-back {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+}
+
+.ff-hero-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+}
+
+.ff-hero-coins {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+
+.ff-hero-coin-img { width: 20px; height: 20px; object-fit: contain; }
+
+.ff-hero-coins span {
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+}
+
+/* ─── Onda ───────────────────────────────────────────────── */
+.ff-wave { width: 100%; line-height: 0; margin-top: 16px; }
+.ff-wave svg { width: 100%; height: 50px; display: block; }
+
+/* ─── Ilustração row ─────────────────────────────────────── */
+.ff-ilustracao-row {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ff-il-img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
+
+.ff-il-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ff-il-logo-img { width: 48px; height: 48px; object-fit: contain; }
+
+.ff-il-logo span {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--blue);
+}
+
+/* ─── Conteúdo ───────────────────────────────────────────── */
+.ff-content { padding: 16px; }
+
+/* ─── Abas ───────────────────────────────────────────────── */
+.ff-tabs {
+  display: flex;
+  background: white;
+  border-radius: 30px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.ff-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: 26px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: background .15s, color .15s;
+}
+
+.ff-tab--active {
+  background: var(--blue);
+  color: white;
+}
+
+/* ─── Lista de ranking ───────────────────────────────────── */
+.ff-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.ff-ranking-item {
+  background: white;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  border: 2px solid transparent;
+}
+
+.ff-ranking-item--top { border-color: var(--green-light); }
+.ff-ranking-item--me  { border-color: var(--green); }
+
+.ff-ranking-item--floating {
+  margin-top: 8px;
+  border-style: dashed;
+}
+
+/* Medalhas */
+.ff-rank-pos { width: 36px; text-align: center; flex-shrink: 0; }
+
+.ff-medal {
+  display: inline-flex;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 900; color: white;
+}
+
+.ff-medal--gold   { background: linear-gradient(135deg, #f5a623, #f0c040); }
+.ff-medal--silver { background: linear-gradient(135deg, #90a4ae, #b0bec5); }
+.ff-medal--bronze { background: linear-gradient(135deg, #bf8c5a, #d4a574); }
+
+.ff-rank-num {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-light);
+}
+
+.ff-rank-num--me { color: var(--green); }
+
+/* Avatar placeholder */
+.ff-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--green-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.ff-avatar--me { background: var(--green); color: white; }
+
+/* Info */
+.ff-rank-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ff-rank-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.ff-rank-you {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.ff-rank-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+/* Moedas */
+.ff-rank-coins {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+}
+
+.ff-rank-coins-num {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+/* Empty state */
+.ff-empty {
+  text-align: center;
+  padding: 32px 16px;
+  background: white;
+  border-radius: 16px;
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ─── Banner ─────────────────────────────────────────────── */
+.ff-banner {
+  background: var(--green-pale);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ff-banner-img { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
+
+.ff-banner-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.ff-banner-text p {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-top: 2px;
+}
+
+/* ─── Nav inferior ───────────────────────────────────────── */
+.ff-bottom-nav {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 4px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.ff-bottom-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  text-decoration: none;
+  font-size: 10px; font-weight: 700;
+  color: var(--text-light);
+}
+
+.ff-bottom-icon { font-size: 20px; }
+.ff-bottom-item--active { color: var(--green); }
+
+/* ─── Responsivo ─────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .ff-wrap { margin: 0; border-radius: 0; min-height: 100vh; }
+  .ff-bottom-nav { position: fixed; max-width: 100%; }
+}
+
+css.ff-medal-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}

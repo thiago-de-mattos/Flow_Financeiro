@@ -124,17 +124,25 @@ def leaderboard_view(request):
     from django.utils import timezone
     import datetime
 
-    scope = request.GET.get("scope", "global")
+    scope  = request.GET.get("scope", "global")
     period = timezone.localdate()
-
     period = period - datetime.timedelta(days=period.weekday())
 
     entries = LeaderboardEntry.objects.filter(
-        scope=scope,
-        period=period
+        scope=scope, period=period
     ).select_related("user").order_by("rank")
 
+    # Entrada do usuário logado
+    try:
+        user_entry = LeaderboardEntry.objects.get(
+            user=request.user, scope=scope, period=period
+        )
+    except LeaderboardEntry.DoesNotExist:
+        user_entry = None
+
     return render(request, "leaderboard.html", {
-        "entries": entries,
-        "scope": scope,
+        "entries":    entries,
+        "scope":      scope,
+        "user_entry": user_entry,
+        "profile":    request.user.profile,
     })

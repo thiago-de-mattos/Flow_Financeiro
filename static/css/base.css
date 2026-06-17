@@ -53,16 +53,6 @@ body {
   min-height: 100vh;
 }
 
-/* ─── Layout ────────────────────────────────────────────── */
-.ff-wrap {
-  max-width: 420px;
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-}
-
 /* ─── Topbar ────────────────────────────────────────────── */
 .ff-topbar {
   display: flex;
