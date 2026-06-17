@@ -61,7 +61,8 @@ class Profile(models.Model):
     coins         = models.PositiveIntegerField("Moedas", default=0)
     streak_days   = models.PositiveIntegerField("Streak (dias)", default=0)
     last_activity = models.DateField("Última atividade", null=True, blank=True)
-
+    avatar = models.CharField("Avatar", max_length=20, default="pessoa1")
+    
     class Meta:
         verbose_name = "Perfil"
         verbose_name_plural = "Perfis"
