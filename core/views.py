@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-
+from datetime import date
 from .forms import RegisterForm, LoginForm
 from .models import Profile
 
@@ -16,6 +16,8 @@ def inicio_view(request):
     return render(request, "inicio.html")
 
 
+from datetime import date
+
 def register_view(request):
     if request.user.is_authenticated:
         return redirect("home")
@@ -26,11 +28,13 @@ def register_view(request):
         with transaction.atomic():
             user = form.save()
             Profile.objects.get_or_create(user=user)
-
         login(request, user)
         return redirect("home")
 
-    return render(request, "register.html", {"form": form})
+    return render(request, "register.html", {
+        "form": form,
+        "today": date.today().strftime("%Y-%m-%d"),
+    })
 
 
 def login_view(request):
