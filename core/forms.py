@@ -1,9 +1,9 @@
 from django import forms
 from django.contrib.auth import authenticate
+from datetime import date
 
 from .models import User
 
-# ─── Cadastro ────────────────────────────────────────────────────────────────
 
 class RegisterForm(forms.ModelForm):
     password1 = forms.CharField(
@@ -17,29 +17,40 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["name", "age", "email"]
+        fields = ["name", "birth_date", "email"]
         widgets = {
-            "name":  forms.TextInput(attrs={"placeholder": "Digite seu nome"}),
-            "age":   forms.NumberInput(attrs={"placeholder": "Digite sua idade", "min": 1, "max": 120}),
-            "email": forms.EmailInput(attrs={"placeholder": "Digite seu e-mail"}),
+            "name":       forms.TextInput(attrs={"placeholder": "Digite seu nome"}),
+            "birth_date": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
+            "email":      forms.EmailInput(attrs={"placeholder": "Digite seu e-mail"}),
         }
         labels = {
-            "name":  "Nome",
-            "age":   "Idade",
-            "email": "E-mail",
+            "name":       "Nome",
+            "birth_date": "Data de Nascimento",
+            "email":      "E-mail",
         }
+
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data["birth_date"]
+        today = date.today()
+
+        # Calcula idade
+        age = today.year - birth_date.year - (
+            (today.month, today.day) < (birth_date.month, birth_date.day)
+        )
+
+        if birth_date > today:
+            raise forms.ValidationError("Data de nascimento não pode ser no futuro.")
+        if age < 5:
+            raise forms.ValidationError("Você precisa ter pelo menos 5 anos.")
+        if age > 120:
+            raise forms.ValidationError("Informe uma data de nascimento válida.")
+        return birth_date
 
     def clean_email(self):
         email = self.cleaned_data["email"].lower()
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Este e-mail já está cadastrado.")
         return email
-
-    def clean_age(self):
-        age = self.cleaned_data["age"]
-        if age < 1 or age > 120:
-            raise forms.ValidationError("Informe uma idade válida.")
-        return age
 
     def clean(self):
         cleaned = super().clean()
@@ -66,8 +77,6 @@ class RegisterForm(forms.ModelForm):
             user.save()
         return user
 
-
-# ─── Login ───────────────────────────────────────────────────────────────────
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
