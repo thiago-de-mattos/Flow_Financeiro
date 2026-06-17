@@ -1,21 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+from datetime import date
 
-
-# ─── Autenticação customizada ────────────────────────────────────────────────
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, age, password=None):
+    def create_user(self, email, name, birth_date, password=None):
         if not email:
             raise ValueError("Email obrigatório")
-        user = self.model(email=self.normalize_email(email), name=name, age=age)
+        user = self.model(email=self.normalize_email(email), name=name, birth_date=birth_date)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, age, password):
-        user = self.create_user(email, name, age, password)
+    def create_superuser(self, email, name, birth_date, password):
+        user = self.create_user(email, name, birth_date, password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -23,19 +22,15 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    Usuário do Flow Financeiro.
-    Usa email como identificador principal (não username).
-    """
-    name       = models.CharField("Nome", max_length=150)
-    age        = models.PositiveSmallIntegerField("Idade")
-    email      = models.EmailField("E-mail", unique=True)
-    is_active  = models.BooleanField(default=True)
-    is_staff   = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    name        = models.CharField("Nome", max_length=150)
+    birth_date  = models.DateField("Data de Nascimento")
+    email       = models.EmailField("E-mail", unique=True)
+    is_active   = models.BooleanField(default=True)
+    is_staff    = models.BooleanField(default=False)
+    created_at  = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD  = "email"
-    REQUIRED_FIELDS = ["name", "age"]
+    REQUIRED_FIELDS = ["name", "birth_date"]
 
     objects = UserManager()
 
@@ -46,6 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.name} ({self.email})"
 
+    @property
+    def age(self):
+        today = date.today()
+        b = self.birth_date
+        return today.year - b.year - ((today.month, today.day) < (b.month, b.day))
 
 # ─── Perfil e gamificação ────────────────────────────────────────────────────
 

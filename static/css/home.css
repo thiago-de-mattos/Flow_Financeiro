@@ -370,3 +370,17 @@
 css.ff-wrap * {
   box-sizing: border-box;
 }
+
+.ff-logout {
+  background: rgba(255,255,255,.2);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: background .15s;
+}
+.ff-logout:hover { background: rgba(255,255,255,.35); }
