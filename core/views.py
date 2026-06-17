@@ -86,19 +86,23 @@ def profile_view(request):
 
     profile, created = Profile.objects.get_or_create(user=request.user)
 
-    badges = UserBadge.objects.filter(
-        user=request.user
-    ).select_related("badge")
+    # Salva avatar escolhido
+    avatares_validos = ["pessoa1","pessoa2","pessoa3","pessoa4","pessoa5","pessoa6"]
+    if request.method == "POST":
+        avatar = request.POST.get("avatar")
+        if avatar in avatares_validos:
+            profile.avatar = avatar
+            profile.save()
+        return redirect("profile")
 
-    lessons_done = UserLessonProgress.objects.filter(
-        user=request.user,
-        completed=True
-    ).count()
+    badges       = UserBadge.objects.filter(user=request.user).select_related("badge")
+    lessons_done = UserLessonProgress.objects.filter(user=request.user, completed=True).count()
 
     return render(request, "profile.html", {
-        "profile": profile,
-        "badges": badges,
+        "profile":      profile,
+        "badges":       badges,
         "lessons_done": lessons_done,
+        "avatares":     avatares_validos,
     })
 
 

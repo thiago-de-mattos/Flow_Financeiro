@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Perfil — Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ff-wrap">
+
+    <!-- Topo azul/verde -->
+    <div class="ff-hero">
+        <div class="ff-hero-topbar">
+            <a href="{% url 'home' %}" class="ff-back">
+                <img src="{% static 'img/arrow.svg' %}" alt="Voltar"
+                    style="width:18px;height:18px;filter:brightness(0) invert(1);">
+            </a>
+            <h1 class="ff-hero-title">Perfil</h1>
+            <button class="ff-settings"
+                onclick="document.getElementById('ff-avatar-modal').classList.toggle('ff-modal--open')">⚙️</button>
+        </div>
+
+        <!-- Avatar -->
+        <div class="ff-avatar-wrap">
+            <img src="/static/img/perfil_pessoas/{{ profile.avatar }}.png" alt="Avatar" class="ff-avatar-img">
+            <button class="ff-avatar-edit"
+                onclick="document.getElementById('ff-avatar-modal').classList.toggle('ff-modal--open')">✏️</button>
+        </div>
+
+        <!-- Onda -->
+        <div class="ff-wave">
+            <svg viewBox="0 0 480 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 Q80 5 160 35 Q240 60 320 35 Q400 5 480 40 L480 60 L0 60 Z" fill="white" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Modal escolha de avatar -->
+    <div class="ff-modal" id="ff-avatar-modal">
+        <div class="ff-modal-box">
+            <div class="ff-modal-header">
+                <span>Escolha seu avatar</span>
+                <button onclick="document.getElementById('ff-avatar-modal').classList.remove('ff-modal--open')"
+                    class="ff-modal-close">✕</button>
+            </div>
+            <form method="POST" id="ff-avatar-form">
+                {% csrf_token %}
+                <div class="ff-avatar-grid">
+                    {% for av in avatares %}
+                    <label class="ff-avatar-option {% if av == profile.avatar %}ff-avatar-option--active{% endif %}">
+                        <input type="radio" name="avatar" value="{{ av }}" {% if av == profile.avatar %}checked{% endif %}
+                            onchange="document.getElementById('ff-avatar-form').submit()">
+                        <img src="/static/img/perfil_pessoas/{{ av }}.png" alt="{{ av }}">
+                    </label>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="ff-content">
+
+        <!-- Nome + nível -->
+        <div class="ff-profile-header">
+            <h2 class="ff-profile-name">{{ request.user.name }}</h2>
+            <div class="ff-level-badge">⭐ Nível {{ profile.level }}</div>
+        </div>
+
+        <!-- Barra de XP -->
+        <div class="ff-xp-wrap">
+            <div class="ff-xp-labels">
+                <span>{{ profile.xp_total }} XP</span>
+                <span>{{ profile.xp_next_level }} XP</span>
+            </div>
+            <div class="ff-xp-bar-bg">
+                <div class="ff-xp-bar-fill" style="width: {% widthratio profile.xp_total profile.xp_next_level 100 %}%">
+                </div>
+            </div>
+        </div>
+
+        <!-- Streak -->
+        <div class="ff-streak-card">
+            <div class="ff-streak-left">
+                <img src="{% static 'img/perfil_img/fogo.png' %}" alt="Fogo" class="ff-streak-fire">
+                <div>
+                    <span class="ff-streak-label">Sequência Diária</span>
+                    <div class="ff-streak-val">
+                        <span class="ff-streak-num">{{ profile.streak_days }}</span>
+                        <span class="ff-streak-unit">dias</span>
+                    </div>
+                </div>
+            </div>
+            <img src="{% static 'img/perfil_img/calendar_perfil.png' %}" alt="Calendário" class="ff-streak-cal">
+        </div>
+
+        <!-- Stats: Coins, Lições, Badges -->
+        <div class="ff-stats-grid">
+
+            <div class="ff-stat-card">
+                <img src="{% static 'img/perfil_img/coin_perfil.png' %}" alt="Moedas" class="ff-stat-img">
+                <span class="ff-stat-label">Moedas</span>
+                <span class="ff-stat-num">{{ profile.coins }}</span>
+            </div>
+
+            <div class="ff-stat-card">
+                <img src="{% static 'img/perfil_img/book_cap.png' %}" alt="Lições" class="ff-stat-img">
+                <span class="ff-stat-label">Lições<br>Concluídas</span>
+                <span class="ff-stat-num">{{ lessons_done }}</span>
+            </div>
+
+            <div class="ff-stat-card">
+                <img src="{% static 'img/perfil_img/badge_perfil.png' %}" alt="Badges" class="ff-stat-img">
+                <span class="ff-stat-label">Badges<br>Conquistados</span>
+                <span class="ff-stat-num">{{ badges|length }}</span>
+            </div>
+
+        </div>
+
+        <!-- Banner motivacional -->
+        <div class="ff-banner">
+            <img src="{% static 'img/porco_2.png' %}" alt="" class="ff-banner-img">
+            <div class="ff-banner-text">
+                <strong>Continue assim, {{ request.user.name|truncatechars:10 }}!</strong>
+                <p>Você está criando ótimos hábitos e garantindo seu futuro financeiro.</p>
+            </div>
+            <span style="font-size:32px;">📈</span>
+        </div>
+
+    </div>
+
+    <!-- Nav inferior -->
+    <nav class="ff-bottom-nav">
+        <a href="{% url 'home' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'play' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🎮</span>
+            <span>Jogar</span>
+        </a>
+        <a href="{% url 'achievements' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏆</span>
+            <span>Conquistas</span>
+        </a>
+        <a href="{% url 'leaderboard' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">📊</span>
+            <span>Ranking</span>
+        </a>
+        <a href="{% url 'profile' %}" class="ff-bottom-item ff-bottom-item--active">
+            <span class="ff-bottom-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+{% endblock %}
