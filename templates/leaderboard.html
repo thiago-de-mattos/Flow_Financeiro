@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ranking — Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ff-wrap">
+
+    <!-- Topo -->
+    <div class="ff-hero">
+        <div class="ff-hero-topbar">
+            <a href="{% url 'home' %}" class="ff-back">
+                <img src="{% static 'img/arrow.svg' %}" alt="Voltar"
+                    style="width:18px;height:18px;filter:brightness(0) invert(1);">
+            </a>
+            <h1 class="ff-hero-title">Ranking</h1>
+            <div class="ff-hero-coins">
+                <img src="{% static 'img/coin.png' %}" alt="" class="ff-hero-coin-img">
+                <span>{{ profile.coins }}</span>
+            </div>
+        </div>
+
+        <!-- Onda -->
+        <div class="ff-wave">
+            <svg viewBox="0 0 480 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 Q80 5 160 35 Q240 60 320 35 Q400 5 480 40 L480 60 L0 60 Z" fill="white" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Ilustração -->
+    <div class="ff-ilustracao-row">
+        <img src="{% static 'img/trofeu_1.png' %}" alt="" class="ff-il-img">
+        <div class="ff-il-logo">
+            <img src="{% static 'img/logo.png' %}" alt="Flow Financeiro" class="ff-il-logo-img">
+            <span>Flow Financeiro</span>
+        </div>
+        <img src="{% static 'img/dinheiro.png' %}" alt="" class="ff-il-img">
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="ff-content">
+
+        <!-- Abas -->
+        <div class="ff-tabs">
+            <a href="?scope=global" class="ff-tab {% if scope == 'global' %}ff-tab--active{% endif %}">
+                🌐 Global
+            </a>
+            <a href="?scope=friends" class="ff-tab {% if scope == 'friends' %}ff-tab--active{% endif %}">
+                👥 Amigos
+            </a>
+            <a href="?scope=school" class="ff-tab {% if scope == 'school' %}ff-tab--active{% endif %}">
+                🎓 Escola
+            </a>
+        </div>
+
+        <!-- Lista de ranking -->
+        <div class="ff-ranking-list">
+
+            {% for entry in entries %}
+            <div
+                class="ff-ranking-item {% if entry.rank <= 3 %}ff-ranking-item--top{% endif %} {% if entry.user == request.user %}ff-ranking-item--me{% endif %}">
+
+            <!-- Posição -->
+            <div class="ff-rank-pos">
+                {% if entry.rank == 1 %}
+                <img src="{% static 'img/leaderboard/1lugar.png' %}" alt="1º" class="ff-medal-img">
+                {% elif entry.rank == 2 %}
+                <img src="{% static 'img/leaderboard/2lugar.png' %}" alt="2º" class="ff-medal-img">
+                {% elif entry.rank == 3 %}
+                <img src="{% static 'img/leaderboard/3lugar.png' %}" alt="3º" class="ff-medal-img">
+                {% else %}
+                <span class="ff-rank-num">{{ entry.rank }}</span>
+                {% endif %}
+            </div>
+
+                <!-- Avatar placeholder -->
+                <div class="ff-avatar">
+                    <span>{{ entry.user.name|first }}</span>
+                </div>
+
+                <!-- Info -->
+                <div class="ff-rank-info">
+                    <span class="ff-rank-name">
+                        {{ entry.user.name }}
+                        {% if entry.user == request.user %}
+                        <span class="ff-rank-you">(Você)</span>
+                        {% endif %}
+                    </span>
+                    <span class="ff-rank-sub">Nível {{ entry.user.profile.level }}</span>
+                </div>
+
+                <!-- Moedas -->
+                <div class="ff-rank-coins">
+                    <span class="ff-rank-coins-num">{{ entry.coins }}</span>
+                    <img src="{% static 'img/coin.png' %}" alt="" style="width:20px;height:20px;">
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="ff-empty">
+                <p>Nenhum dado disponível para este período ainda.</p>
+                <p>Complete lições para aparecer no ranking! 🎯</p>
+            </div>
+            {% endfor %}
+
+            <!-- Entrada do usuário logado destacada (se não estiver no top) -->
+            {% if user_entry and user_entry.rank > entries|length %}
+            <div class="ff-ranking-item ff-ranking-item--me ff-ranking-item--floating">
+                <div class="ff-rank-pos">
+                    <span class="ff-rank-num ff-rank-num--me">{{ user_entry.rank }}</span>
+                </div>
+                <div class="ff-avatar ff-avatar--me">
+                    <span>{{ request.user.name|first }}</span>
+                </div>
+                <div class="ff-rank-info">
+                    <span class="ff-rank-name">{{ request.user.name }} <span class="ff-rank-you">(Você)</span></span>
+                    <span class="ff-rank-sub" style="color: var(--green);">Continue subindo! 💪</span>
+                </div>
+                <div class="ff-rank-coins">
+                    <span class="ff-rank-coins-num">{{ user_entry.coins }}</span>
+                    <img src="{% static 'img/coin.png' %}" alt="" style="width:20px;height:20px;">
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Banner motivacional -->
+        <div class="ff-banner">
+            <img src="{% static 'img/coin.png' %}" alt="" class="ff-banner-img">
+            <div class="ff-banner-text">
+                <strong style="color: var(--green);">Suba no ranking, construa seu futuro!</strong>
+                <p>Aprenda, invista e ganhe seu lugar no topo.</p>
+            </div>
+            <span style="font-size: 32px;">📈</span>
+        </div>
+
+    </div>
+
+    <!-- Nav inferior -->
+    <nav class="ff-bottom-nav">
+        <a href="{% url 'home' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'play' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🎮</span>
+            <span>Jogar</span>
+        </a>
+        <a href="{% url 'achievements' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏆</span>
+            <span>Conquistas</span>
+        </a>
+        <a href="{% url 'leaderboard' %}" class="ff-bottom-item ff-bottom-item--active">
+            <span class="ff-bottom-icon">📊</span>
+            <span>Ranking</span>
+        </a>
+        <a href="{% url 'profile' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+{% endblock %}
