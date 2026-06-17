@@ -68,23 +68,22 @@
                 </div>
             </div>
 
-            <!-- Idade -->
-            <div class="ff-field-group">
-                <label class="ff-field-label">Idade</label>
-                <div class="ff-field-row">
-                    <div class="ff-field-icon">
-                        <img src="{% static 'img/calendar.svg' %}" alt="" style="width:24px;height:24px;">
-                    </div>
-                    <div class="ff-input-wrap">
-                        <input class="ff-input {% if form.age.errors %}ff-input--error{% endif %}" type="number"
-                            name="age" placeholder="Digite sua idade" value="{{ form.age.value|default:'' }}" min="1"
-                            max="120">
-                        {% if form.age.errors %}
-                        <span class="ff-error">{{ form.age.errors.0 }}</span>
-                        {% endif %}
-                    </div>
+        <!-- Data de Nascimento -->
+        <div class="ff-field-group">
+            <label class="ff-field-label">Data de Nascimento</label>
+            <div class="ff-field-row">
+                <div class="ff-field-icon">
+                    <img src="{% static 'img/calendar.svg' %}" alt="" style="width:24px;height:24px;">
+                </div>
+                <div class="ff-input-wrap">
+                    <input class="ff-input {% if form.birth_date.errors %}ff-input--error{% endif %}" type="date"
+                        name="birth_date" value="{{ form.birth_date.value|default:'' }}" max="{{ today }}">
+                    {% if form.birth_date.errors %}
+                    <span class="ff-error">{{ form.birth_date.errors.0 }}</span>
+                    {% endif %}
                 </div>
             </div>
+        </div>
 
             <!-- E-mail -->
             <div class="ff-field-group">
