@@ -21,19 +21,6 @@
     </div>
     {% endif %}
 
-    {% if user.is_authenticated %}
-    <header class="ff-header">
-        <nav class="ff-nav">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'play' %}">Jogar</a>
-            <a href="{% url 'leaderboard' %}">Ranking</a>
-            <a href="{% url 'achievements' %}">Conquistas</a>
-            <a href="{% url 'profile' %}">Perfil</a>
-            <a href="{% url 'logout' %}">Sair</a>
-        </nav>
-    </header>
-    {% endif %}
-
     <main class="ff-main">
         {% block content %}{% endblock %}
     </main>
