@@ -81,9 +81,13 @@ WSGI_APPLICATION = 'flowfianceiro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {"default": dj_database_url.config(default=os.get("DATABASE_URL"), conn_max_age=600,ssl_require=True, #Importante para Render     
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"), 
+        conn_max_age=600,
+        ssl_require=True 
     ) 
-} 
+}
 
 AUTH_USER_MODEL = 'core.User'
 
