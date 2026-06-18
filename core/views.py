@@ -154,3 +154,7 @@ def leaderboard_view(request):
         "user_entry": user_entry,
         "profile":    request.user.profile,
     })
+
+@login_required
+def sobre_view(request):
+    return render(request, "sobre.html")
