@@ -81,12 +81,13 @@ WSGI_APPLICATION = 'flowfinanceiro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+DATABASE_URL = os.getenv("DATABASE_URL")
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"), 
+        default=DATABASE_URL,
         conn_max_age=600,
-        ssl_require=True 
-    ) 
+        ssl_require=bool(DATABASE_URL and not DATABASE_URL.lower().startswith("sqlite")),
+    )
 }
 
 AUTH_USER_MODEL = 'core.User'
@@ -133,4 +134,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles" 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

@@ -13,6 +13,7 @@ urlpatterns = [
     # Páginas principais
     path("home/",         views.home_view,         name="home"),
     path("play/",         views.play_view,         name="play"),
+    path("play/complete/", views.play_complete_view, name="play_complete"),
     path("profile/",      views.profile_view,      name="profile"),
     path("achievements/", views.achievements_view, name="achievements"),
     path("leaderboard/",  views.leaderboard_view,  name="leaderboard"),

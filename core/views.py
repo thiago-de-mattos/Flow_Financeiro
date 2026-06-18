@@ -1,10 +1,15 @@
+import json
+
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.views.decorators.http import require_POST
 from datetime import date
 from .forms import RegisterForm, LoginForm
 from .models import Profile
+from .play_questions import PLAY_QUESTIONS
 
 
 # ─── Autenticação ─────────────────────────────────────────────────────────────
@@ -69,18 +74,58 @@ def home_view(request):
 
 @login_required
 def play_view(request):
-    from .models import Module, UserLessonProgress
-
-    modules = Module.objects.filter(is_active=True).prefetch_related("lessons")
-
-    progress = UserLessonProgress.objects.filter(
-        user=request.user,
-        completed=True
-    ).values_list("lesson_id", flat=True)
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    completed_ids = request.session.get("play_completed_questions", [])
 
     return render(request, "play.html", {
-        "modules": modules,
-        "progress": set(progress),
+        "questions": PLAY_QUESTIONS,
+        "completed_ids": completed_ids,
+        "profile": profile,
+        "total_questions": len(PLAY_QUESTIONS),
+    })
+
+
+@login_required
+@require_POST
+def play_complete_view(request):
+    try:
+        payload = json.loads(request.body.decode("utf-8"))
+        question_id = int(payload.get("question_id"))
+        selected_answer = bool(payload.get("answer"))
+    except (TypeError, ValueError, json.JSONDecodeError):
+        return JsonResponse({"error": "Resposta invalida."}, status=400)
+
+    question = next((item for item in PLAY_QUESTIONS if item["id"] == question_id), None)
+    if question is None:
+        return JsonResponse({"error": "Pergunta nao encontrada."}, status=404)
+
+    is_correct = selected_answer == question["answer"]
+    completed_ids = {int(item) for item in request.session.get("play_completed_questions", [])}
+    reward = {"xp": 0, "coins": 0}
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if is_correct and question_id not in completed_ids:
+        completed_ids.add(question_id)
+        request.session["play_completed_questions"] = sorted(completed_ids)
+        request.session.modified = True
+
+        reward = {"xp": question["xp"], "coins": question["coins"]}
+        profile.coins += question["coins"]
+        profile.add_xp(question["xp"])
+        profile.update_streak()
+
+    return JsonResponse({
+        "is_correct": is_correct,
+        "answer": question["answer"],
+        "explanation": question["explanation"],
+        "completed_ids": sorted(completed_ids),
+        "reward": reward,
+        "profile": {
+            "coins": profile.coins,
+            "level": profile.level,
+            "xp_total": profile.xp_total,
+            "xp_next_level": profile.xp_next_level,
+        },
     })
 
 
