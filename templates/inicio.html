@@ -28,10 +28,10 @@
         </header>
 
         <div class="floating-items">
-            <img src="{% static 'img/coin.png' %}" alt="" class="floating-img coin coin-1">
-            <img src="{% static 'img/coin.png' %}" alt="" class="floating-img coin coin-2">
-            <img src="{% static 'img/dinheiro.png' %}" alt="" class="floating-img money money-1">
-            <img src="{% static 'img/dinheiro.png' %}" alt="" class="floating-img money money-2">
+            <span class="coin coin-1">🪙</span>
+            <span class="coin coin-2">🪙</span>
+            <span class="money money-1">💵</span>
+            <span class="money money-2">💵</span>
         </div>
 
         <section class="hero-content">
@@ -60,10 +60,7 @@
             <div class="preview-card evolution-card">
                 <div class="card-title">
                     <h3>Sua evolução financeira</h3>
-                    <span class="trend-up">
-                        <img src="{% static 'img/arrow.svg' %}" alt="">
-                        +32%
-                    </span>
+                    <span>↗ +32%</span>
                 </div>
 
                 <div class="fake-chart">
@@ -93,7 +90,7 @@
             </div>
 
             <div class="preview-card level-card">
-                <img src="{% static 'img/podio.png' %}" alt="" class="level-icon">
+                <div class="level-icon">📊</div>
 
                 <div>
                     <small>Nível atual</small>
@@ -132,33 +129,26 @@
         </section>
 
         <section class="bottom-art">
-            <img src="{% static 'img/bank_.png' %}" alt="" class="bank">
-            <img src="{% static 'img/carteira.png' %}" alt="" class="wallet">
-            <img src="{% static 'img/arrow.svg' %}" alt="" class="big-arrow">
-            <img src="{% static 'img/cadeado.svg' %}" alt="" class="shield">
+            <span class="bank">🏛️</span>
+            <span class="wallet">👛</span>
+            <span class="big-arrow">➜</span>
+            <span class="shield">🛡️</span>
         </section>
 
         {% if user.is_authenticated %}
         <a href="{% url 'play' %}" class="start-button">
-            <img src="{% static 'img/trilha.png' %}" alt="" class="button-icon">
-            Jogar agora
-            <span>
-                <img src="{% static 'img/arrow.svg' %}" alt="" class="start-arrow">
-            </span>
+            🚀 Jogar agora
+            <span>›</span>
         </a>
         {% else %}
         <a href="{% url 'login' %}" class="start-button">
-            <img src="{% static 'img/trilha.png' %}" alt="" class="button-icon">
-            Começar
-            <span>
-                <img src="{% static 'img/arrow.svg' %}" alt="" class="start-arrow">
-            </span>
+            🚀 Começar
+            <span>›</span>
         </a>
         {% endif %}
 
         <p class="safe-text">
-            <img src="{% static 'img/cadeado.svg' %}" alt="" class="safe-icon">
-            100% gratuito | Aprendizado seguro | Gamificação
+            🛡️ 100% gratuito | Aprendizado seguro | Gamificação
         </p>
 
     </div>
