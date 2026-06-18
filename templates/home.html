@@ -15,7 +15,10 @@
         <div class="ff-hero-topbar">
             <div class="ff-welcome">
                 <span class="ff-welcome-sub">Bem-vindo de volta,</span>
-                <h1 class="ff-welcome-name">{{ request.user.name }} 👋</h1>
+                <h1 class="ff-welcome-name">
+                    {{ request.user.name }}
+                    <img src="{% static 'img/person.svg' %}" alt="" class="ff-welcome-icon">
+                </h1>
             </div>
             <div class="ff-hero-right">
                 <div class="ff-hero-ilustracao">
@@ -51,7 +54,10 @@
 
             <div class="ff-card ff-card--savings">
                 <div class="ff-savings-header">
-                    <span class="ff-card-label">🎯 Progresso</span>
+                    <span class="ff-card-label ff-card-label--icon">
+                        <img src="{% static 'img/pote_dinheiro.png' %}" alt="" class="ff-label-icon">
+                        Progresso
+                    </span>
                     <img src="{% static 'img/pote_dinheiro.png' %}" alt="" class="ff-savings-img">
                 </div>
                 <span class="ff-savings-pct">{% widthratio profile.xp_total profile.xp_next_level 100 %}%</span>
@@ -72,28 +78,36 @@
                 <img src="{% static 'img/trilha.png' %}" alt="Jogar" class="ff-nav-img">
                 <span class="ff-nav-title" style="color: var(--green);">Jogar</span>
                 <span class="ff-nav-desc">Continue sua jornada de aprendizado</span>
-                <div class="ff-nav-btn ff-nav-btn--green">›</div>
+                <div class="ff-nav-btn ff-nav-btn--green">
+                    <img src="{% static 'img/arrow.svg' %}" alt="" class="ff-btn-arrow">
+                </div>
             </a>
 
             <a href="{% url 'achievements' %}" class="ff-nav-card ff-nav-card--yellow">
                 <img src="{% static 'img/trofeu_1.png' %}" alt="Conquistas" class="ff-nav-img">
                 <span class="ff-nav-title" style="color: #7b5e00;">Conquistas</span>
                 <span class="ff-nav-desc">Desbloqueie badges e acompanhe o progresso</span>
-                <div class="ff-nav-btn ff-nav-btn--yellow">›</div>
+                <div class="ff-nav-btn ff-nav-btn--yellow">
+                    <img src="{% static 'img/arrow.svg' %}" alt="" class="ff-btn-arrow">
+                </div>
             </a>
 
             <a href="{% url 'leaderboard' %}" class="ff-nav-card ff-nav-card--blue">
                 <img src="{% static 'img/podio.png' %}" alt="Ranking" class="ff-nav-img">
                 <span class="ff-nav-title" style="color: var(--blue);">Ranking</span>
                 <span class="ff-nav-desc">Veja sua posição entre os amigos</span>
-                <div class="ff-nav-btn ff-nav-btn--blue">›</div>
+                <div class="ff-nav-btn ff-nav-btn--blue">
+                    <img src="{% static 'img/arrow.svg' %}" alt="" class="ff-btn-arrow">
+                </div>
             </a>
 
             <a href="{% url 'sobre' %}" class="ff-nav-card ff-nav-card--purple">
                 <img src="{% static 'img/bonecos.png' %}" alt="Sobre" class="ff-nav-img">
                 <span class="ff-nav-title" style="color: #6a1b9a;">Sobre Nós</span>
                 <span class="ff-nav-desc">Saiba mais sobre nossa missão</span>
-                <div class="ff-nav-btn ff-nav-btn--purple">›</div>
+                <div class="ff-nav-btn ff-nav-btn--purple">
+                    <img src="{% static 'img/arrow.svg' %}" alt="" class="ff-btn-arrow">
+                </div>
             </a>
 
         </div>
@@ -171,10 +185,15 @@
 
             <!-- Indicador -->
             <div class="ff-spending-indicator">
-                <span class="ff-indicator-icon">📈</span>
+                <span class="ff-indicator-icon">
+                    <img src="{% static 'img/prancheta.png' %}" alt="" class="ff-indicator-img">
+                </span>
                 <div>
                     <strong>Queda de 12%</strong>
-                    <p>Você gastou menos que no mês passado 🎉</p>
+                    <p>
+                        Você gastou menos que no mês passado
+                        <img src="{% static 'img/trofeu_1.png' %}" alt="" class="ff-inline-icon">
+                    </p>
                 </div>
             </div>
         </div>
@@ -184,7 +203,7 @@
             <img src="{% static 'img/dinheiro.png' %}" alt="" class="ff-banner-img">
             <div class="ff-banner-text">
                 <p>Pequenos passos hoje,</p>
-                <p>grande <strong style="color: var(--green);">liberdade</strong> amanhã. 🌱</p>
+                <p>grande <strong style="color: var(--green);">liberdade</strong> amanhã.</p>
             </div>
         </div>
 
@@ -193,23 +212,33 @@
     <!-- Nav inferior -->
     <nav class="ff-bottom-nav">
         <a href="{% url 'home' %}" class="ff-bottom-item ff-bottom-item--active">
-            <span class="ff-bottom-icon">🏠</span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/logo.png' %}" alt="">
+            </span>
             <span>Home</span>
         </a>
         <a href="{% url 'play' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon">🎮</span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/trilha.png' %}" alt="">
+            </span>
             <span>Jogar</span>
         </a>
         <a href="{% url 'achievements' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon">🏆</span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/trofeu_1.png' %}" alt="">
+            </span>
             <span>Conquistas</span>
         </a>
         <a href="{% url 'leaderboard' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon">📊</span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/podio.png' %}" alt="">
+            </span>
             <span>Ranking</span>
         </a>
         <a href="{% url 'profile' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon">👤</span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/person.svg' %}" alt="">
+            </span>
             <span>Perfil</span>
         </a>
     </nav>
