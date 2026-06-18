@@ -36,6 +36,16 @@
   font-weight: 900;
   color: white;
   line-height: 1.1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ff-welcome-icon {
+  width: 28px;
+  height: 28px;
+  filter: invert(1);
+  flex-shrink: 0;
 }
 
 .ff-hero-right {
@@ -92,6 +102,19 @@
   color: var(--text-dark);
   display: block;
   margin-bottom: 8px;
+}
+
+.ff-card-label--icon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ff-label-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Coins */
@@ -184,10 +207,15 @@
   width: 32px; height: 32px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 900;
   color: white;
   align-self: flex-end;
   margin-top: 8px;
+}
+.ff-btn-arrow {
+  width: 18px;
+  height: 18px;
+  filter: invert(1);
+  transform: rotate(180deg);
 }
 .ff-nav-btn--green  { background: var(--green); }
 .ff-nav-btn--yellow { background: #f5a623; }
@@ -304,7 +332,22 @@
   margin-top: 16px;
 }
 
-.ff-indicator-icon { font-size: 24px; }
+.ff-indicator-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ff-indicator-img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
 
 .ff-spending-indicator strong {
   display: block;
@@ -317,6 +360,16 @@
   font-size: 11px;
   color: var(--text-mid);
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ff-inline-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* ─── Banner motivacional ────────────────────────────────── */
@@ -354,7 +407,19 @@
   text-align: center;
 }
 
-.ff-bottom-icon { font-size: 20px; }
+.ff-bottom-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ff-bottom-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
 .ff-bottom-item--active { color: var(--green); }
 
