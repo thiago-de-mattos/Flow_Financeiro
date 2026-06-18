@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sobre Nós — Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/sobre.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ff-wrap">
+
+    <!-- Topo verde -->
+    <div class="ff-hero">
+        <div class="ff-hero-topbar">
+            <a href="{% url 'home' %}" class="ff-back">
+                <img src="{% static 'img/arrow.svg' %}" alt="Voltar"
+                    style="width:18px;height:18px;filter:brightness(0) invert(1);">
+            </a>
+            <h1 class="ff-hero-title">Sobre Nós</h1>
+            <div style="width:36px"></div>
+        </div>
+
+        <!-- Logo centralizado -->
+        <div class="ff-hero-logo">
+            <img src="{% static 'img/logo.png' %}" alt="Flow Financeiro" class="ff-hero-logo-img">
+            <span class="ff-hero-logo-text">Flow Financeiro</span>
+        </div>
+
+        <!-- Onda -->
+        <div class="ff-wave">
+            <svg viewBox="0 0 480 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 Q80 5 160 35 Q240 60 320 35 Q400 5 480 40 L480 60 L0 60 Z" fill="white" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="ff-content">
+
+        <!-- Tagline -->
+        <div class="ff-tagline">
+            <p>Tornamos a educação financeira <strong>envolvente</strong>, interativa e acessível para todos através da
+                <strong>gamificação</strong>.</p>
+            <p class="ff-tagline-sub">Aprenda por desafios. Crie hábitos. Construa seu futuro.</p>
+        </div>
+
+        <!-- Cards de pilares -->
+        <div class="ff-pillars">
+
+            <div class="ff-pillar-card">
+                <span class="ff-pillar-icon">🎮</span>
+                <span class="ff-pillar-title">Aprender</span>
+                <span class="ff-pillar-desc">Domine conceitos financeiros passo a passo</span>
+            </div>
+
+            <div class="ff-pillar-card">
+                <span class="ff-pillar-icon">🪙</span>
+                <span class="ff-pillar-title">Ganhar</span>
+                <span class="ff-pillar-desc">Complete desafios e ganhe recompensas</span>
+            </div>
+
+            <div class="ff-pillar-card">
+                <span class="ff-pillar-icon">📈</span>
+                <span class="ff-pillar-title">Crescer</span>
+                <span class="ff-pillar-desc">Construa hábitos e alcance seus objetivos</span>
+            </div>
+
+        </div>
+
+        <!-- Time -->
+        <div class="ff-section">
+            <div class="ff-section-header">
+                <span class="ff-section-title">Nosso Time</span>
+
+            </div>
+
+            <div class="ff-team-grid">
+
+                <div class="ff-team-card">
+                    <div class="ff-team-avatar">TM</div>
+                    <span class="ff-team-name">Thiago de Mattos</span>
+                    <span class="ff-team-role">Fundador & CEO</span>
+                    <div class="ff-team-links">
+                        <a href="#" class="ff-team-link">in</a>
+                        <a href="#" class="ff-team-link">gh</a>
+                    </div>
+                </div>
+
+                <div class="ff-team-card">
+                    <div class="ff-team-avatar ff-team-avatar--pink">CM</div>
+                    <span class="ff-team-name">Camila</span>
+                    <span class="ff-team-role">Product Designer</span>
+                    <div class="ff-team-links">
+                        <a href="#" class="ff-team-link">in</a>
+                        <a href="#" class="ff-team-link">gh</a>
+                    </div>
+                </div>
+
+                <div class="ff-team-card">
+                    <div class="ff-team-avatar ff-team-avatar--blue">JJ</div>
+                    <span class="ff-team-name">Jonathan</span>
+                    <span class="ff-team-role">Developer</span>
+                    <div class="ff-team-links">
+                        <a href="#" class="ff-team-link">in</a>
+                        <a href="#" class="ff-team-link">gh</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Contato -->
+        <div class="ff-section">
+            <span class="ff-section-title">Vamos conversar!</span>
+
+            <div class="ff-contact-list">
+                <a href="mailto:hey@flowfinanceiro.com" class="ff-contact-item">
+                    <span class="ff-contact-icon">✉️</span>
+                    <span>hey@flowfinanceiro.com</span>
+                </a>
+                <a href="mailto:contato@flowfinanceiro.com" class="ff-contact-item">
+                    <span class="ff-contact-icon">✉️</span>
+                    <span>contato@flowfinanceiro.com</span>
+            </div>
+        </div>
+
+        <!-- Rodapé verde -->
+        <div class="ff-footer-green">
+            <div class="ff-footer-left">
+                <img src="{% static 'img/porco_1.png' %}" alt="" class="ff-footer-img">
+            </div>
+            <div class="ff-footer-text">
+                <strong>Flow Financeiro</strong>
+                <p>Aprenda. Ganhe. Cresça.</p>
+            </div>
+            <div class="ff-footer-right">
+                <span style="font-size:40px;">📊</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Nav inferior -->
+    <nav class="ff-bottom-nav">
+        <a href="{% url 'home' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'play' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🎮</span>
+            <span>Jogar</span>
+        </a>
+        <a href="{% url 'achievements' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏆</span>
+            <span>Conquistas</span>
+        </a>
+        <a href="{% url 'leaderboard' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">📊</span>
+            <span>Ranking</span>
+        </a>
+        <a href="{% url 'profile' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+{% endblock %}
