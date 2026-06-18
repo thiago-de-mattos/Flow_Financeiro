@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Conquistas — Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/achievements.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ff-wrap">
+
+    <!-- Topo verde -->
+    <div class="ff-hero">
+        <div class="ff-hero-topbar">
+            <a href="{% url 'home' %}" class="ff-back">
+                <img src="{% static 'img/arrow.svg' %}" alt="Voltar"
+                    style="width:18px;height:18px;filter:brightness(0) invert(1);">
+            </a>
+            <h1 class="ff-hero-title">Conquistas</h1>
+            <div class="ff-hero-coins">
+                <img src="{% static 'img/coin.png' %}" alt="" style="width:20px;height:20px;">
+                <span>{{ request.user.profile.coins }}</span>
+            </div>
+        </div>
+
+        <!-- Onda -->
+        <div class="ff-wave">
+            <svg viewBox="0 0 480 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 Q80 5 160 35 Q240 60 320 35 Q400 5 480 40 L480 60 L0 60 Z" fill="white" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="ff-content">
+
+        <!-- Progresso geral -->
+        <div class="ff-progress-card">
+            <div class="ff-progress-header">
+                <div class="ff-progress-info">
+                    <span class="ff-progress-icon">🏆</span>
+                    <div>
+                        <span class="ff-progress-title">Badges Desbloqueados</span>
+                        <span class="ff-progress-count">
+                            <strong>{{ earned_ids|length }}</strong> / {{ badges|length }}
+                        </span>
+                    </div>
+                </div>
+                <img src="{% static 'img/coin.png' %}" alt="" style="width:48px;height:48px;object-fit:contain;">
+            </div>
+            <div class="ff-bar-bg">
+                <div class="ff-bar-fill" style="width: {% widthratio earned_ids|length badges|length 100 %}%"></div>
+            </div>
+            <p class="ff-progress-msg">Continue aprendendo e ganhe mais badges!</p>
+        </div>
+
+        <!-- Grid de conquistas -->
+        <div class="ff-badges-grid">
+            {% for badge in badges %}
+            {% if badge.id in earned_ids %}
+
+            <!-- Badge desbloqueado -->
+            <div class="ff-badge-card ff-badge-card--unlocked">
+                <div class="ff-badge-check">✓</div>
+                <img src="/static/img/achievements/{{ badge.icon }}.png" alt="{{ badge.title }}" class="ff-badge-img">
+                <span class="ff-badge-title">{{ badge.title }}</span>
+                <span class="ff-badge-desc">{{ badge.description }}</span>
+                <span class="ff-badge-status ff-badge-status--done">Concluído</span>
+            </div>
+
+            {% else %}
+
+            <!-- Badge bloqueado -->
+            <div class="ff-badge-card ff-badge-card--locked">
+                <img src="/static/img/achievements/bloqueado.png" alt="Bloqueado"
+                    class="ff-badge-img ff-badge-img--locked">
+                <span class="ff-badge-title ff-badge-title--locked">{{ badge.title }}</span>
+                <span class="ff-badge-desc">{{ badge.description }}</span>
+                <span class="ff-badge-status ff-badge-status--locked">🔒 Bloqueado</span>
+            </div>
+
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- Nav inferior -->
+    <nav class="ff-bottom-nav">
+        <a href="{% url 'home' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'play' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">🎮</span>
+            <span>Jogar</span>
+        </a>
+        <a href="{% url 'achievements' %}" class="ff-bottom-item ff-bottom-item--active">
+            <span class="ff-bottom-icon">🏆</span>
+            <span>Conquistas</span>
+        </a>
+        <a href="{% url 'leaderboard' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">📊</span>
+            <span>Ranking</span>
+        </a>
+        <a href="{% url 'profile' %}" class="ff-bottom-item">
+            <span class="ff-bottom-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+{% endblock %}
