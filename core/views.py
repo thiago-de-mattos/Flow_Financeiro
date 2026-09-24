@@ -9,7 +9,7 @@ from django.views.decorators.http import require_POST
 from datetime import date
 from .forms import RegisterForm, LoginForm
 from .models import Profile
-from .play_questions import PLAY_QUESTIONS
+from ..content.seed_data import PLAY_QUESTIONS
 
 
 # ─── Autenticação ─────────────────────────────────────────────────────────────
