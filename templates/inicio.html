@@ -140,7 +140,6 @@
 
         {% if user.is_authenticated %}
         <a href="{% url 'play' %}" class="start-button">
-            <img src="{% static 'img/trilha.png' %}" alt="" class="button-icon">
             Jogar agora
             <span>
                 <img src="{% static 'img/arrow.svg' %}" alt="" class="start-arrow">
@@ -148,7 +147,6 @@
         </a>
         {% else %}
         <a href="{% url 'login' %}" class="start-button">
-            <img src="{% static 'img/trilha.png' %}" alt="" class="button-icon">
             Começar
             <span>
                 <img src="{% static 'img/arrow.svg' %}" alt="" class="start-arrow">
