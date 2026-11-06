@@ -1,4 +1,3 @@
-# gamification/services/badges.py
 from play.models import LessonProgress, QuestionProgress
 
 from ..models import Badge, UserBadge
@@ -19,12 +18,18 @@ DEFAULT_BADGES = [
 ]
 
 
-def ensure_default_badges():
+def ensure_default_badges(overwrite=False):
+    """Cria os badges que faltam. Com overwrite=True, também ressincroniza
+    título, descrição e categoria com os valores do código."""
     for badge in DEFAULT_BADGES:
-        Badge.objects.update_or_create(icon=badge["icon"], defaults=badge)
+        if overwrite:
+            Badge.objects.update_or_create(icon=badge["icon"], defaults=badge)
+        else:
+            Badge.objects.get_or_create(icon=badge["icon"], defaults=badge)
 
 
 def award_eligible_badges(user, profile=None):
+    ensure_default_badges()
     profile = profile or user.profile
     respondidas = QuestionProgress.objects.filter(user=user).count()
     fases = LessonProgress.objects.filter(user=user, completed=True).count()

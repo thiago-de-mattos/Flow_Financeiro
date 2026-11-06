@@ -37,31 +37,43 @@ def responder(user, question, resposta) -> Resultado:
 
     if question.check_answer(resposta):
         res.acertou = True
-        _, primeira_vez = QuestionProgress.objects.get_or_create(user=user, question=question)
+        registro, _ = QuestionProgress.objects.get_or_create(user=user, question=question)
+        registro.solved = True
 
-        if primeira_vez:
+        if not registro.rewarded:                      # paga UMA vez na vida
             res.xp, res.moedas = question.xp_reward, question.coins_reward
             profile.coins += question.coins_reward
             profile.add_xp(question.xp_reward)
             profile.update_streak()
+            registro.rewarded = True
+
+        registro.save(update_fields=["solved", "rewarded"])
     else:
         progresso.lives_left = max(0, progresso.lives_left - 1)
-        res.game_over = progresso.lives_left == 0
-        if res.game_over:
-            progresso.lives_left = VIDAS_POR_FASE   # recomeça com as vidas cheias
+
+        if progresso.lives_left == 0:                  # zera a fase, mantém o pagamento
+            res.game_over = True
+            QuestionProgress.objects.filter(
+                user=user, question__lesson=lesson
+            ).update(solved=False)
+            progresso.lives_left = VIDAS_POR_FASE
+            progresso.attempts += 1
 
     res.respondidas = QuestionProgress.objects.filter(
-        user=user, question__lesson=lesson
+        user=user, question__lesson=lesson, solved=True
     ).count()
 
     if res.respondidas >= total and not progresso.completed:
         progresso.completed = True
         progresso.completed_at = timezone.now()
         res.fase_concluida = True
-        res.xp += lesson.xp_reward
-        res.moedas += lesson.coins_reward
-        profile.coins += lesson.coins_reward
-        profile.add_xp(lesson.xp_reward)
+
+        if not progresso.rewarded:                     # bônus de fase também é único
+            res.xp += lesson.xp_reward
+            res.moedas += lesson.coins_reward
+            profile.coins += lesson.coins_reward
+            profile.add_xp(lesson.xp_reward)
+            progresso.rewarded = True
 
     progresso.score = res.respondidas
     progresso.save()
