@@ -614,3 +614,23 @@
   .ff-quiz-modal { padding: 0; }
   .ff-quiz-dialog { border-radius: 22px 22px 0 0; }
 }
+
+/* Título clicável no cartão da fase */
+.ff-path .ff-node-card h2 a,
+.ff-path .ff-node-card h2 a:visited {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+/* Número clicável dentro da bolinha */
+.ff-path a.ff-node,
+.ff-path a.ff-node:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Mostra qual link está selecionado ao navegar com Tab */
+.ff-path a:focus-visible {
+    outline: 3px solid #17683b;
+    outline-offset: 4px;
+}

@@ -361,3 +361,171 @@ PLAY_QUESTIONS = [
     },
 ]
 
+def multipla(enunciado, opcoes, correta, explicacao):
+    return {
+        "kind": "mc",
+        "statement": enunciado,
+        "payload": {"options": opcoes, "answer": correta},
+        "explanation": explicacao,
+    }
+
+
+def lacuna(enunciado, resposta, explicacao, alternativas=()):
+    return {
+        "kind": "fill",
+        "statement": enunciado,
+        "payload": {
+            "answer": resposta,
+            "also_accept": list(alternativas),
+        },
+        "explanation": explicacao,
+    }
+
+
+def associacao(enunciado, pares, explicacao):
+    return {
+        "kind": "match",
+        "statement": enunciado,
+        "payload": {"pairs": pares},
+        "explanation": explicacao,
+    }
+
+
+VARIACOES = {
+    # Fase 1 — Fundamentos do dinheiro
+    2: multipla(
+        "Você recebeu R$ 100 e gastou R$ 65. Quanto sobrou?",
+        ["R$ 25", "R$ 35", "R$ 65"],
+        1,
+        "O saldo é a diferença entre o que entrou e o que saiu: 100 − 65 = 35.",
+    ),
+    3: lacuna(
+        "Guardar parte do dinheiro para usar no futuro é ___.",
+        "poupar",
+        "Poupar é separar parte da renda para usar depois.",
+        ["economizar"],
+    ),
+    4: associacao(
+        "Associe cada situação ao conceito correto.",
+        [
+            ["Recebi meu salário", "Receita"],
+            ["Paguei uma conta", "Despesa"],
+            ["Calculei quanto sobrou", "Saldo"],
+        ],
+        "A receita entra, a despesa sai e o saldo mostra a diferença.",
+    ),
+
+    # Fase 2 — Crédito e primeiros passos
+    7: multipla(
+        "Uma compra tem três parcelas de R$ 40. Qual é o total?",
+        ["R$ 40", "R$ 80", "R$ 120"],
+        2,
+        "Três parcelas de R$ 40 somam R$ 120.",
+    ),
+    8: lacuna(
+        "A data limite para pagar uma fatura é o seu ___.",
+        "vencimento",
+        "O vencimento indica até quando a fatura deve ser paga.",
+    ),
+    9: associacao(
+        "Associe os termos do cartão.",
+        [
+            ["Valor máximo de crédito", "Limite"],
+            ["Resumo das compras do período", "Fatura"],
+            ["Parte de uma compra dividida", "Parcela"],
+        ],
+        "O limite define o crédito disponível. A fatura reúne os gastos e cada parcela é parte de uma compra.",
+    ),
+
+    # Fase 3 — Renda fixa e variável
+    12: multipla(
+        "Ao comprar uma ação, o que você adquire?",
+        ["Uma participação na empresa", "Um salário fixo", "Uma garantia de lucro"],
+        0,
+        "Uma ação representa uma pequena participação no capital da empresa.",
+    ),
+    13: lacuna(
+        "A facilidade de converter um ativo em dinheiro é chamada de ___.",
+        "liquidez",
+        "Liquidez indica a facilidade de transformar o ativo em dinheiro.",
+    ),
+    14: associacao(
+        "Associe cada ativo ao que ele representa.",
+        [
+            ["Ação", "Participação em empresa"],
+            ["Título de dívida", "Empréstimo ao emissor"],
+            ["Cota de fundo", "Fração de um fundo"],
+        ],
+        "Cada ativo representa um direito diferente para o investidor.",
+    ),
+
+    # Fase 4 — Estratégia de aportes
+    17: multipla(
+        "Sem contar juros, quanto é preciso guardar por mês para juntar R$ 600 em seis meses?",
+        ["R$ 60", "R$ 100", "R$ 120"],
+        1,
+        "Dividindo R$ 600 por seis meses, chegamos a R$ 100 por mês.",
+    ),
+    18: lacuna(
+        "Cada nova contribuição de dinheiro para um investimento é um ___.",
+        "aporte",
+        "Um aporte é um valor acrescentado ao investimento.",
+    ),
+    19: associacao(
+        "Associe as partes de um plano de economia.",
+        [
+            ["Quanto quero juntar", "Meta"],
+            ["Até quando quero juntar", "Prazo"],
+            ["Quanto guardo a cada mês", "Aporte mensal"],
+        ],
+        "Uma meta pode ser planejada a partir do valor desejado, do prazo e dos aportes.",
+    ),
+
+    # Fase 5 — Risco e comportamento
+    22: multipla(
+        "Qual situação concentra mais o risco em uma empresa?",
+        [
+            "Dividir o dinheiro entre dez empresas",
+            "Guardar parte do dinheiro em uma reserva",
+            "Investir todo o dinheiro nas ações da mesma empresa",
+        ],
+        2,
+        "Quando todo o investimento depende de uma empresa, um problema nela afeta toda a posição.",
+    ),
+    23: lacuna(
+        "Buscar apenas informações que reforçam a própria opinião é o viés de ___.",
+        "confirmação",
+        "O viés de confirmação favorece informações que combinam com aquilo em que já acreditamos.",
+    ),
+    24: associacao(
+        "Associe o risco ao exemplo.",
+        [
+            ["Risco de crédito", "O emissor deixa de pagar"],
+            ["Risco de mercado", "O preço do ativo oscila"],
+            ["Risco de liquidez", "É difícil encontrar um comprador"],
+        ],
+        "Crédito envolve pagamento, mercado envolve preços e liquidez envolve a facilidade de negociar.",
+    ),
+
+    # Fase 6 — Macro e finanças
+    27: multipla(
+        "Uma cesta de produtos passou de R$ 200 para R$ 220. Qual foi o aumento percentual?",
+        ["5%", "10%", "20%"],
+        1,
+        "O aumento foi de R$ 20. Dividindo 20 por 200, temos 0,10, ou 10%.",
+    ),
+    28: lacuna(
+        "O retorno que desconta o efeito da inflação é chamado de retorno ___.",
+        "real",
+        "O retorno real considera a mudança no poder de compra.",
+    ),
+    29: associacao(
+        "Associe os conceitos econômicos.",
+        [
+            ["Inflação", "Aumento geral do nível de preços"],
+            ["Câmbio", "Preço de uma moeda em relação a outra"],
+            ["Juros", "Custo do dinheiro ao longo do tempo"],
+        ],
+        "Os três conceitos descrevem mudanças em preços, moedas e no valor do dinheiro ao longo do tempo.",
+    ),
+}

@@ -1,141 +1,147 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Play - Flow Financeiro{% endblock %}
+{% block title %}Jogar | Flow Financeiro{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/play.css' %}">
 {% endblock %}
 
 {% block content %}
-{{ questions|json_script:"ff-question-data" }}
-{{ completed_ids|json_script:"ff-completed-data" }}
-
-<div class="ff-play-wrap" data-complete-url="{% url 'play_complete' %}" data-storage-key="ff-play-progress-{{ request.user.id }}">
-    <form class="ff-play-csrf">{% csrf_token %}</form>
+<div class="ff-play-wrap">
 
     <header class="ff-play-hero">
         <div class="ff-play-topbar">
-            <a href="{% url 'home' %}" class="ff-play-back" aria-label="Voltar">
+            <a href="{% url 'home' %}"
+               class="ff-play-back"
+               aria-label="Voltar para a página principal">
                 <img src="{% static 'img/arrow.svg' %}" alt="">
             </a>
 
-            <h1>Play</h1>
+            <h1>Trilha de fases</h1>
 
             <div class="ff-play-coins">
-                <img src="{% static 'img/coin.png' %}" alt="">
-                <span id="ffPlayCoins">{{ profile.coins }}</span>
+                <img src="{% static 'img/coin.png' %}" alt="Moedas">
+                <span>{{ profile.coins }}</span>
             </div>
         </div>
 
-        <div class="ff-play-wave">
-            <svg viewBox="0 0 480 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 34 Q80 58 160 34 Q240 10 320 34 Q400 58 480 34 L480 60 L0 60 Z" fill="#f7fbef" />
+        <div class="ff-play-wave" aria-hidden="true">
+            <svg viewBox="0 0 480 60" preserveAspectRatio="none">
+                <path d="M0 34 Q80 58 160 34 Q240 10 320 34 Q400 58 480 34 L480 60 L0 60 Z"
+                      fill="#f7fbef"/>
             </svg>
         </div>
     </header>
 
-    <main class="ff-play-scene">
-        <img src="{% static 'img/bank_.png' %}" alt="" class="ff-scenery ff-scenery--bank">
-        <img src="{% static 'img/carteira.png' %}" alt="" class="ff-scenery ff-scenery--wallet">
-        <img src="{% static 'img/porco_1.png' %}" alt="" class="ff-scenery ff-scenery--pig">
-        <img src="{% static 'img/dinheiro.png' %}" alt="" class="ff-scenery ff-scenery--money">
-        <img src="{% static 'img/trofeu_1.png' %}" alt="" class="ff-scenery ff-scenery--trophy">
+    <section class="ff-play-scene" aria-label="Trilha de aprendizagem">
 
-        <section class="ff-play-progress" aria-live="polite">
-            <div>
-                <span class="ff-play-kicker">Sua jornada</span>
-                <strong><span id="ffCompletedCount">0</span> / {{ total_questions }} pontos</strong>
-            </div>
-            <div class="ff-play-progress-bar">
-                <span id="ffProgressFill"></span>
-            </div>
-        </section>
+        <img src="{% static 'img/bank_.png' %}"
+             alt="" class="ff-scenery ff-scenery--bank">
+        <img src="{% static 'img/carteira.png' %}"
+             alt="" class="ff-scenery ff-scenery--wallet">
+        <img src="{% static 'img/porco_1.png' %}"
+             alt="" class="ff-scenery ff-scenery--pig">
 
-        <ol class="ff-path" aria-label="Trilha de perguntas">
-            {% for question in questions %}
-            <li class="ff-path-step" data-question-id="{{ question.id }}">
-                <button type="button" class="ff-node" data-question-id="{{ question.id }}">
-                    <span class="ff-node-lock"></span>
-                    <span class="ff-node-number">{{ question.id|stringformat:"02d" }}</span>
-                </button>
+        <div class="ff-play-progress">
+            <span class="ff-play-kicker">Sua jornada</span>
+            <strong>{{ concluidas }} de {{ trilha|length }} fases concluídas</strong>
 
-                <article class="ff-node-card">
-                    <span>{{ question.level_title }}</span>
-                    <h2>{{ question.id }}. {{ question.title }}</h2>
-                    <p>{{ question.topic }}</p>
-                    <div class="ff-node-stars">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </article>
-            </li>
+            {% if trilha %}
+                <div class="ff-play-progress-bar">
+                    <span style="width: {% widthratio concluidas trilha|length 100 %}%"></span>
+                </div>
+            {% endif %}
+        </div>
+
+        <ol class="ff-path">
+            {% for etapa in trilha %}
+                <li class="ff-path-step {% if etapa.estado == 'current' %}is-active{% elif etapa.estado == 'done' %}is-complete{% else %}is-locked{% endif %}">
+
+                    {% if etapa.estado == 'locked' %}
+                        <span class="ff-node" aria-hidden="true">
+                            <span class="ff-node-lock"></span>
+                        </span>
+                    {% else %}
+                        <a class="ff-node"
+                           href="{% url 'fase' etapa.fase.pk %}"
+                           aria-label="Abrir fase {{ forloop.counter }}: {{ etapa.fase.title }}">
+                            <span class="ff-node-number">
+                                {{ forloop.counter|stringformat:"02d" }}
+                            </span>
+                        </a>
+                    {% endif %}
+
+                    <article class="ff-node-card">
+                        <span>{{ etapa.fase.module.title }}</span>
+
+                        <h2>
+                            {% if etapa.estado == 'locked' %}
+                                {{ etapa.fase.title }}
+                            {% else %}
+                                <a href="{% url 'fase' etapa.fase.pk %}">
+                                    {{ etapa.fase.title }}
+                                </a>
+                            {% endif %}
+                        </h2>
+
+                        <p>{{ etapa.acertos }} de {{ etapa.total }} perguntas</p>
+
+                        {% if etapa.estado == 'locked' %}
+                            <p>Conclua a fase anterior para liberar.</p>
+                        {% elif etapa.estado == 'done' %}
+                            <p>Fase concluída</p>
+                        {% else %}
+                            <p>Disponível para jogar</p>
+                        {% endif %}
+                    </article>
+                </li>
+            {% empty %}
+                <li class="ff-node-card">
+                    <h2>Ainda não há fases disponíveis.</h2>
+                </li>
             {% endfor %}
         </ol>
-    </main>
+    </section>
 
-    <nav class="ff-bottom-nav">
+    <nav class="ff-bottom-nav" aria-label="Menu principal">
         <a href="{% url 'home' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon"><img src="{% static 'img/logo.png' %}" alt=""></span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/logo.png' %}" alt="">
+            </span>
             <span>Home</span>
         </a>
-        <a href="{% url 'play' %}" class="ff-bottom-item ff-bottom-item--active">
-            <span class="ff-bottom-icon"><img src="{% static 'img/trilha.png' %}" alt=""></span>
+
+        <a href="{% url 'play' %}"
+           class="ff-bottom-item ff-bottom-item--active"
+           aria-current="page">
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/trilha.png' %}" alt="">
+            </span>
             <span>Jogar</span>
         </a>
+
         <a href="{% url 'achievements' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon"><img src="{% static 'img/trofeu_1.png' %}" alt=""></span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/trofeu_1.png' %}" alt="">
+            </span>
             <span>Conquistas</span>
         </a>
+
         <a href="{% url 'leaderboard' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon"><img src="{% static 'img/podio.png' %}" alt=""></span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/podio.png' %}" alt="">
+            </span>
             <span>Ranking</span>
         </a>
+
         <a href="{% url 'profile' %}" class="ff-bottom-item">
-            <span class="ff-bottom-icon"><img src="{% static 'img/person.svg' %}" alt=""></span>
+            <span class="ff-bottom-icon">
+                <img src="{% static 'img/person.svg' %}" alt="">
+            </span>
             <span>Perfil</span>
         </a>
     </nav>
-</div>
 
-<div class="ff-quiz-modal" id="ffQuizModal" hidden>
-    <div class="ff-quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="ffQuizTitle">
-        <button type="button" class="ff-quiz-close" id="ffQuizClose" aria-label="Fechar">x</button>
-
-        <div class="ff-quiz-head">
-            <span id="ffQuizLevel">Nivel Base</span>
-            <div class="ff-hearts" id="ffHearts">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
-        <h2 id="ffQuizTitle">Pergunta</h2>
-        <p id="ffQuizStatement"></p>
-
-        <div class="ff-answer-grid">
-            <button type="button" class="ff-answer" data-answer="true">
-                <strong>Verdadeiro</strong>
-            </button>
-            <button type="button" class="ff-answer" data-answer="false">
-                <strong>Falso</strong>
-            </button>
-        </div>
-
-        <div class="ff-feedback" id="ffFeedback" hidden>
-            <strong id="ffFeedbackTitle"></strong>
-            <p id="ffFeedbackText"></p>
-            <span id="ffRewardText"></span>
-        </div>
-
-        <button type="button" class="ff-continue" id="ffContinue" hidden>Continuar</button>
-    </div>
 </div>
 {% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/play.js' %}"></script>
-{% endblock %}
-

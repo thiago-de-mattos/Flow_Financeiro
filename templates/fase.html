@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ fase.title }} | Flow Financeiro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/play.css' %}">
+<link rel="stylesheet" href="{% static 'css/fase.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="notificacoes-conquistas" class="notificacoes-conquistas" role="status" aria-live="polite"></div>
+
+<div class="ff-play-wrap fase-pagina">
+    <header class="ff-play-hero">
+        <div class="ff-play-topbar">
+            <a href="{% url 'play' %}" class="ff-play-back" aria-label="Voltar à trilha">
+                <img src="{% static 'img/arrow.svg' %}" alt="">
+            </a>
+
+            <h1>{{ fase.module.title }}</h1>
+
+            <div class="ff-play-coins">
+                <img src="{% static 'img/coin.png' %}" alt="Moedas">
+                <span id="saldo-moedas">{{ request.user.profile.coins }}</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="fase-conteudo">
+        <span class="ff-play-kicker">{{ fase.title }}</span>
+
+        {% if concluida %}
+        <h2>Fase concluída!</h2>
+        <p>Você completou as {{ total }} perguntas desta fase.</p>
+        <a class="fase-acao" href="{% url 'play' %}">Voltar à trilha</a>
+
+        {% elif pergunta %}
+        <div class="fase-andamento">
+            <span>Pergunta {{ numero }} de {{ total }}</span>
+
+            <span id="vidas-fase" class="fase-vidas" role="img"
+                aria-label="{{ vidas_restantes }} de {{ total_vidas }} vidas restantes">
+                {% for posicao in espacos_vidas %}
+                {% if posicao <= vidas_restantes %} <span class="fase-coracao" aria-hidden="true">♥</span>
+            {% else %}
+            <span class="fase-coracao sem-vida" aria-hidden="true">♡</span>
+            {% endif %}
+            {% endfor %}
+            </span>
+        </div>
+
+        <span class="ff-play-kicker">{{ pergunta.get_kind_display }}</span>
+        <h2 id="enunciado">{{ pergunta.statement }}</h2>
+
+        <form id="form-resposta" method="post" action="{% url 'play_complete' %}" data-pergunta="{{ pergunta.pk }}"
+            data-tipo="{{ pergunta.kind }}">
+
+            {% csrf_token %}
+
+            <fieldset id="campos-resposta" aria-labelledby="enunciado">
+                {% if pergunta.kind == 'tf' %}
+                <label class="fase-opcao">
+                    <input type="radio" name="resposta" value="true" required>
+                    Verdadeiro
+                </label>
+
+                <label class="fase-opcao">
+                    <input type="radio" name="resposta" value="false" required>
+                    Falso
+                </label>
+
+                {% elif pergunta.kind == 'mc' %}
+                {% for opcao in opcoes %}
+                <label class="fase-opcao">
+                    <input type="radio" name="resposta" value="{{ forloop.counter0 }}" required>
+                    {{ opcao }}
+                </label>
+                {% endfor %}
+
+                {% elif pergunta.kind == 'fill' %}
+                <label for="palavra">Complete a frase</label>
+                <input id="palavra" class="fase-input" type="text" name="resposta"
+                    placeholder="Digite a palavra que falta" autocomplete="off" required>
+
+                {% elif pergunta.kind == 'match' %}
+                {% for termo in termos %}
+                <label>
+                    {{ termo }}
+                    <select class="fase-select" data-termo="{{ termo }}" required>
+                        <option value="">Escolha a associação</option>
+                        {% for definicao in definicoes %}
+                        <option value="{{ definicao }}">{{ definicao }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                {% endfor %}
+                {% endif %}
+            </fieldset>
+
+            <button type="submit" id="btn-confirmar" class="fase-acao">
+                Confirmar resposta
+            </button>
+        </form>
+
+        <div id="feedback-resposta" role="status" hidden>
+            <h3 id="titulo-feedback"></h3>
+            <p id="explicacao-feedback"></p>
+            <p id="resumo-feedback"></p>
+        </div>
+
+        <a id="btn-continuar" class="fase-acao" href="{% url 'fase' fase.pk %}" data-trilha="{% url 'play' %}" hidden>
+            Continuar
+        </a>
+
+        {% else %}
+        <h2>Você chegou ao fim das perguntas desta fase.</h2>
+        <a class="fase-acao" href="{% url 'play' %}">Voltar à trilha</a>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/fase.js' %}" defer></script>
+{% endblock %}

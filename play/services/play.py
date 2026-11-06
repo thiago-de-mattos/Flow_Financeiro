@@ -74,7 +74,10 @@ def responder(user, question, resposta) -> Resultado:
             profile.coins += lesson.coins_reward
             profile.add_xp(lesson.xp_reward)
             progresso.rewarded = True
-
+    
+    if res.moedas > 0:
+        profile.save(update_fields=["coins"])
+    
     progresso.score = res.respondidas
     progresso.save()
 

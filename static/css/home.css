@@ -437,6 +437,9 @@ css.ff-wrap * {
 }
 
 .ff-logout {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
   background: rgba(255,255,255,.2);
   color: white;
   font-size: 12px;

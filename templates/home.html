@@ -24,7 +24,10 @@
                 <div class="ff-hero-ilustracao">
                     <img src="{% static 'img/porco_1.png' %}" alt="Porquinho">
                 </div>
-                    <a href="{% url 'logout' %}" class="ff-logout">Sair</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="ff-logout">Sair</button>
+                    </form>
             </div>
         </div>
 

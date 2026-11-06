@@ -131,12 +131,10 @@
 
         </section>
 
-        <section class="bottom-art">
-            <img src="{% static 'img/bank_.png' %}" alt="" class="bank">
-            <img src="{% static 'img/carteira.png' %}" alt="" class="wallet">
-            <img src="{% static 'img/arrow.svg' %}" alt="" class="big-arrow">
-            <img src="{% static 'img/cadeado.svg' %}" alt="" class="shield">
-        </section>
+    <section class="bottom-art" aria-hidden="true">
+        <img src="{% static 'img/bank_.png' %}" alt="" class="bank">
+        <img src="{% static 'img/carteira.png' %}" alt="" class="wallet">
+    </section>
 
         {% if user.is_authenticated %}
         <a href="{% url 'play' %}" class="start-button">
